@@ -4,9 +4,9 @@
 #PBS -N wrapBigNodeAngsd
 #PBS -e 99_logfiles/angsd_wrap/wrapBigNodeAngsd.err
 #PBS -o 99_logfiles/angsd_wrap/wrapBigNodeAngsd.out
-#PBS -l nodes=1:ppn=40:fatnode
-#PBS -l walltime=99:00:00
-#PBS -l mem=1200gb
+#PBS -l nodes=1:ppn=32:fatnode
+#PBS -l walltime=48:00:00
+#PBS -l mem=900gb
 #PBS -m n
 #PBS -r n
 
