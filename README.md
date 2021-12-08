@@ -3,7 +3,8 @@ lcWGS pipeline analysis of Flat oysters (<i>Ostrea edulis</i>) post data-process
 
 # Flat oyster populations throughout its distribution range
 ### Population Structure
-(https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Population_Structure.md)
+[PCA](https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Population_Structure1.md)
+[Admixture](https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Population_Structure2.md)
 ### Mitochondrial analysis
 (https://github.com/therkildsen-lab/Flat_oysters/03_markdowns/Mitochondrial_phylogeo.md)
 ### SFS-based analysis
