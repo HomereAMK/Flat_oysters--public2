@@ -3,9 +3,9 @@ PCA-based analyses
 
   - [Genome-wide PCA](#genome-wide-pca)
    - [Subsampled](#subsampled)
-   - [LD estimation between SNPs](#LD estimation between SNPs)
-   - [LD pruning](#LD pruning)
-   - [Pruned SNPs list](#Pruned SNPs list)
+   - [LD estimation between SNPs](#LD-estimation-between-SNPs)
+   - [LD pruning](#LD-pruning)
+   - [Pruned SNPs list](#Pruned-SNPs-list)
 
 ## Genome-wide-pca
 :oyster:    use iqsub for all the following scripts    :oyster:
