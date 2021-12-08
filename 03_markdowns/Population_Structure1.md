@@ -11,7 +11,7 @@ PCA-based analyses
 :oyster:    use iqsub for all the following scripts in a separate screen   :oyster:
 ## Subsampled
 ``` 
-BASEDIR=02_angsdOutput
+BASEDIR=02_angsdOutput/Dataset_I
 
 ## Prepare a geno file by subsampling one SNP in every 50 SNPs in the beagle file
 zcat $BASEDIR/BigN_wrap_nrep.beagle.gz | awk 'NR % 50 == 0' | cut -f 4- | gzip  > $BASEDIR/BigN_wrap_nrep.subsamp.50.beagle.gz
