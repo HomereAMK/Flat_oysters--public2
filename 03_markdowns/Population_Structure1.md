@@ -2,14 +2,14 @@ PCA-based analyses
 ================
 
   - [Genome-wide PCA](#genome-wide-pca)
-   - [Subsampled](#02_subsampled.sh)
-   - [LD estimation between SNPs](#03_ngsLD.sh)
-   - [LD pruning](#04_LDpruning.sh)
-   - [Pruned SNPs list](#06_angsdSNPlist.sh)
+   - [Subsampled](#subsampled)
+   - [LD estimation between SNPs](#LD estimation between SNPs)
+   - [LD pruning](#LD pruning)
+   - [Pruned SNPs list](#Pruned SNPs list)
 
-## Genome-wide PCA
+## Genome-wide-pca
 :oyster:    use iqsub for all the following scripts    :oyster:
-#### Subsampled
+## Subsampled
 ``` 
 BASEDIR=02_angsdOutput
 
@@ -20,7 +20,7 @@ zcat $BASEDIR/BigN_wrap_nrep.mafs.gz | cut -f 1,2 |  awk 'NR % 50 == 0' | sed 's
 ``` 
 
 
-#### LD estimation between SNPs
+## LD estimation between SNPs
 ```
 module load tools
 module load ngs
@@ -59,8 +59,8 @@ OUTPUTDIR=02_ngsLDOutput
 --max_kb_dist ? \
 --n_threads ? \
 --out $OUTPUTDIR/BigN_wrap_nrep.subsamp.50.ld
+```
+## LD pruning
 
-#### LD pruning
-
-#### Pruned SNPs list
+## Pruned SNPs list
 
