@@ -8,7 +8,7 @@ PCA-based analyses
    - [Pruned SNPs list](#Pruned-SNPs-list)
 
 ## Genome-wide-pca
-:oyster:    use iqsub for all the following scripts    :oyster:
+:oyster:    use iqsub for all the following scripts in a separate screen   :oyster:
 ## Subsampled
 ``` 
 BASEDIR=02_angsdOutput
@@ -61,6 +61,17 @@ OUTPUTDIR=02_ngsLDOutput
 --out $OUTPUTDIR/BigN_wrap_nrep.subsamp.50.ld
 ```
 ## LD pruning
+```
+LDFILES=02_ngsLDOutput/BigN_wrap_nrep.subsamp.50.ld
+OUTPUTFOLDER=02_ngsLDOutput
+```
+```
+perl /services/tools/ngstools/20190624/ngsLD/scripts/prune_graph.pl \
+       --in_file $LDFILES \
+       --max_kb_dist 2000 \
+       --min_weight 0.5 \
+       --out $OUTPUTFOLDER/BigN_wrap_nrep.subsamp.50.id
+```
 
 ## Pruned SNPs list
 
