@@ -6,11 +6,11 @@ lcWGS pipeline analysis of Flat oysters (<i>Ostrea edulis</i>) post data-process
 [PCA](https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Population_Structure1.md)
 [Admixture](https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Population_Structure2.md)
 ### Mitochondrial analysis
-(https://github.com/therkildsen-lab/Flat_oysters/03_markdowns/Mitochondrial_phylogeo.md)
+[Phylogeography](https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Mitochondrial_phylogeo.md)
 ### SFS-based analysis
-(https://github.com/therkildsen-lab/Flat_oysters/03_markdowns/SFS-based.md)
+(https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/SFS-based.md)
 ### Fst-based analysis
-(https://github.com/therkildsen-lab/Flat_oysters/03_markdowns/Fst-based.md)
+[Fst Manhattan plot](https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Fst-based.md)
 # Side notes
 All scripts are launch (except ) with iqsub command on a different screen 
 screen -ls : "see all the screens"
