@@ -21,7 +21,7 @@ module load angsd/0.935
 
 #var
 REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome10scaffoldC3G.fasta
-BAMLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/Bam_list_noRep
+BAMLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_noRep
 #script
 /home/projects/dp_00007/apps/Scripts/wrapper_angsd.sh -debug 2 -nThreads 40 \
 -b $BAMLIST -ref $REF -out 02_angsdOutput/BigN_wrap_nrep \
