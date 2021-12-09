@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -d /home/projects/dp_00007/people/hmon/Flat_oysters
 #PBS -W group_list=dp_00007 -A dp_00007
-#PBS -N wrapBigNodeAngsd
+#PBS -N BigN_angsd_regular
 #PBS -e 99_logfiles/angsd/BigNodeAngsd.err
 #PBS -o 99_logfiles/angsd/BigNodeAngsd.out
 #PBS -l nodes=1:ppn=40:fatnode
