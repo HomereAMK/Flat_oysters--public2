@@ -28,4 +28,4 @@ angsd \
 -b $BAMLIST -ref $REF -out  $OUTPUTDIR/BigN_cur \
 -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -setMaxDepth 1000 -MinMaf 0.015 -SNP_pval 1e-6 -postCutoff 0.95 \
 -GL 2 -doMajorMinor 4 -doMaf 1 -doCounts 1 -doGlf 2 -doPost 2 -doGeno 2 -dumpCounts 2 -doHaploCall 1 -doIBS 1 -doQsDist 1 -doDepth 1 \
--doCov 1 -makeMatrix 1 -P 36
+-doCov 1 -makeMatrix 1 -P 36 >/dev/null
