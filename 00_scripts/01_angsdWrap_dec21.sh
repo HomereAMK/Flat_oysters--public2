@@ -1,9 +1,9 @@
 #!/bin/bash
 #PBS -d /home/projects/dp_00007/people/hmon/Flat_oysters
 #PBS -W group_list=dp_00007 -A dp_00007
-#PBS -N wrapBigNodeAngsd2
-#PBS -e 99_logfiles/angsd_wrap/wrapBigNodeAngsd2.err
-#PBS -o 99_logfiles/angsd_wrap/wrapBigNodeAngsd2.out
+#PBS -N wrapBigNodeAngsd10dec
+#PBS -e 99_logfiles/angsd_wrap/wrapBigNodeAngsd10dec.err
+#PBS -o 99_logfiles/angsd_wrap/wrapBigNodeAngsd10dec.out
 #PBS -l nodes=2:ppn=30:fatnode
 #PBS -l walltime=48:00:00
 #PBS -l mem=1300gb
@@ -25,6 +25,6 @@ OUTPUTDIR=02_angsdOutput/Dataset_I
 
 #script
 /home/projects/dp_00007/apps/Scripts/wrapper_angsd.sh -debug 2 -nThreads 40 \
--b $BAMLIST -ref $REF -out $OUTPUTDIR/BigN_wrap_cur2 \
+-b $BAMLIST -ref $REF -out $OUTPUTDIR/BigN_wrap_cur10dec \
 -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -setMaxDepth 1000 -MinMaf 0.015 -SNP_pval 1e-6 \
 -GL 2 -doMajorMinor 4 -doMaf 1 -doCounts 1 -doGlf 2 -doPost 2 -doGeno 2 -dumpCounts 2 -postCutoff 0.95 -doHaploCall 1 >/dev/null
