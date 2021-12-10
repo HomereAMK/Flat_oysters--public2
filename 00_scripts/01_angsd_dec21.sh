@@ -1,10 +1,10 @@
 #!/bin/bash
 #PBS -d /home/projects/dp_00007/people/hmon/Flat_oysters
 #PBS -W group_list=dp_00007 -A dp_00007
-#PBS -N BigN_angsd_regular
-#PBS -e 99_logfiles/angsd/BigNodeAngsd.err
-#PBS -o 99_logfiles/angsd/BigNodeAngsd.out
-#PBS -l nodes=1:ppn=40:fatnode
+#PBS -N BigN_angsd_regular10dec
+#PBS -e 99_logfiles/angsd/BigNodeAngsd10dec.err
+#PBS -o 99_logfiles/angsd/BigNodeAngsd10dec.out
+#PBS -l nodes=2:ppn=36:fatnode
 #PBS -l walltime=600:00:00
 #PBS -l mem=1300gb
 #PBS -m n
@@ -25,7 +25,7 @@ OUTPUTDIR=02_angsdOutput/Dataset_I
 
 #script
 angsd \
--b $BAMLIST -ref $REF -out  $OUTPUTDIR/BigN_cur \
+-b $BAMLIST -ref $REF -out  $OUTPUTDIR/BigN_cur10dec \
 -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -setMaxDepth 1000 -MinMaf 0.015 -SNP_pval 1e-6 -postCutoff 0.95 \
 -GL 2 -doMajorMinor 4 -doMaf 1 -doCounts 1 -doGlf 2 -doPost 2 -doGeno 2 -dumpCounts 2 -doHaploCall 1 -doIBS 1 -doQsDist 1 -doDepth 1 \
 -doCov 1 -makeMatrix 1 -P 36 >/dev/null
