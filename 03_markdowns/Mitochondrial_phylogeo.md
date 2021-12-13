@@ -1,4 +1,19 @@
+## Get depth bam file
 
+````
+module load samtools/1.14
+
+#Depth 
+for file in $(ls 02_data/realigned/*Mt.bam|sed -e 's/.bam//'|sort -u); do
+    samtools depth -aa "$file".bam | cut -f 3 | gzip > "$file"_depth.gz
+done
+
+#mv 02_data/realigned/*_depth.gz depths
+
+#Make depth_list
+BAMSDEPTH=/home/projects/dp_00007/people/hmon/MitOyster/02_data/realigned/*_depth.gz
+ls $BAMSDEPTH > 01_infofiles/list_depth_Mt_12dec21
+````
 
 
 ## Get allele count
