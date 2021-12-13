@@ -20,6 +20,9 @@ ls $BAMSDEPTH > 01_infofiles/list_depth_Mt_12dec21
 
 
 ````
+#Get the bam list
+BAMSDEPTH=/home/projects/dp_00007/people/hmon/MitOyster/02_data/realigned/*Mt.bam
+ls $BAMSDEPTH > 01_infofiles/list_Mt_12dec21_curated
 
 # Load module angsd
 module load tools computerome_utils/2.0
