@@ -33,4 +33,3 @@ angsd \
 -dumpCounts 2 \
 -out 03_results/bam_list_realigned_mtgenome_sorted_filtered_minq20.depth 
 
-```
