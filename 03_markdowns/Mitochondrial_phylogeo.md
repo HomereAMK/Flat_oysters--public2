@@ -14,7 +14,7 @@ done
 BAMSDEPTH=/home/projects/dp_00007/people/hmon/MitOyster/02_data/realigned/*_depth.gz
 ls $BAMSDEPTH > 01_infofiles/list_depth_Mt_12dec21
 ````
-
+Now run the R script(https://github.com/HomereAMK/MitOyster/blob/main/00_scripts/07_covstats.R)
 
 ## Get allele count
 
