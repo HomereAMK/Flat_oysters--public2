@@ -1,6 +1,7 @@
 
 
 
+## Get allele count
 
 
 ````
@@ -24,6 +25,7 @@ angsd \
 ````
 
 ## Get depth count
+````
 angsd \
 -bam 01_infofiles/list_Mt_12dec21_curated \
 -doCounts 1 \
