@@ -2,6 +2,7 @@ PCA-based analyses
 ================
 
   - [Genome-wide PCA](#genome-wide-pca)
+   - [Missing Data on the Variant Calling](#Missing-Data-on-the-Variant-Calling)
    - [Subsampled](#subsampled)
    - [LD estimation between SNPs](#LD-estimation-between-SNPs)
    - [LD pruning](#LD-pruning)
@@ -9,6 +10,15 @@ PCA-based analyses
 
 ## Genome-wide-pca
 :oyster:    use iqsub for all the following scripts in a separate screen   :oyster:
+## Missing Data on the Variant Calling
+```
+#Get the label list from the bam list
+awk '{split($0,a,"/"); print a[9]}' /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21 | awk '{split($0,b,"_"); print b[1]"_"b[2]}' > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels
+```
+```
+#Get the annotation file 
+cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels | awk '{split($0,a,"_"); print $1"\t"a[1]}' > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.annot
+```
 ## Subsampled
 ``` 
 BASEDIR=02_angsdOutput/Dataset_I
