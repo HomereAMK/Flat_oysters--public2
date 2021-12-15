@@ -22,9 +22,13 @@ cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec
 ## Missing Data on the Variant Calling
 ##### Gets Real Coverage (_Genotype Likelihoods_):
 ```
-zcat /home/projects/dp_00007/people/hmon/Flat_oysters/xxxx.counts.gz | tail -n +2 | gawk ' {for (i=1;i<=NF;i++){a[i]+=$i;++count[i]}} END{ for(i=1;i<=NF;i++){print a[i]/count[i]}}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/xxxx.GL-RealCoverage.txt
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/xxxx.counts.gz | tail -n +2 | gawk ' {for (i=1;i<=NF;i++){a[i]+=$i;++count[i]}} END{ for(i=1;i<=NF;i++){print a[i]/count[i]}}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/xxxx.GL-RealCoverage.txt
 ```
-
+##### Gets Missing Data (_Genotype Likelihoods_):
+```
+N_IND=`wc -l /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels`
+zcat /home/projects/dp_00007/people/02_angsdOutput/Dataset_I/xxxxx.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk '{print $1"\t"$3"\t"$3*100/$N_IND}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/xxxxx.GL-MissingData.txt
+``` 
 ## Subsampled
 ``` 
 BASEDIR=02_angsdOutput/Dataset_I
