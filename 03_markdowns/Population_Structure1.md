@@ -10,7 +10,7 @@ PCA-based analyses
 
 ## Genome-wide-pca
 :oyster:    use iqsub for all the following scripts in a separate screen   :oyster:
-## Missing Data on the Variant Calling
+
 ```
 #Get the label list from the bam list
 awk '{split($0,a,"/"); print a[9]}' /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21 | awk '{split($0,b,"_"); print b[1]"_"b[2]}' > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels
@@ -19,6 +19,12 @@ awk '{split($0,a,"/"); print a[9]}' /home/projects/dp_00007/people/hmon/Flat_oys
 #Get the annotation file 
 cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels | awk '{split($0,a,"_"); print $1"\t"a[1]}' > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.annot
 ```
+## Missing Data on the Variant Calling
+##### Gets Real Coverage (_Genotype Likelihoods_):
+```
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/xxxx.counts.gz | tail -n +2 | gawk ' {for (i=1;i<=NF;i++){a[i]+=$i;++count[i]}} END{ for(i=1;i<=NF;i++){print a[i]/count[i]}}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/xxxx.GL-RealCoverage.txt
+```
+
 ## Subsampled
 ``` 
 BASEDIR=02_angsdOutput/Dataset_I
