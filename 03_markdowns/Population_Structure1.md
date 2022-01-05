@@ -19,24 +19,24 @@ awk '{split($0,a,"/"); print a[9]}' /home/projects/dp_00007/people/hmon/Flat_oys
 #Get the annotation file 
 cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels | awk '{split($0,a,"_"); print $1"\t"a[1]}' > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.annot
 ```
-## Missing Data on the Variant Calling
+## Missing Data on the Variant Calling 11 560 052 SNPs
 ##### Gets Real Coverage (_Genotype Likelihoods_):
 ```
-zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/xxxx.counts.gz | tail -n +2 | gawk ' {for (i=1;i<=NF;i++){a[i]+=$i;++count[i]}} END{ for(i=1;i<=NF;i++){print a[i]/count[i]}}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/xxxx.GL-RealCoverage.txt
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.counts.gz | tail -n +2 | gawk ' {for (i=1;i<=NF;i++){a[i]+=$i;++count[i]}} END{ for(i=1;i<=NF;i++){print a[i]/count[i]}}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.GL-RealCoverage.txt
 ```
-##### Gets Missing Data (_Genotype Likelihoods_):
+##### Gets Missing Data (_Genotype Likelihoods_) 11 560 052 SNPs:
 ```
 N_IND=`wc -l /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels`
-zcat /home/projects/dp_00007/people/02_angsdOutput/Dataset_I/xxxxx.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk '{print $1"\t"$3"\t"$3*100/$N_IND}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/xxxxx.GL-MissingData.txt
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk '{print $1"\t"$3"\t"$3*100/$N_IND}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.GL-MissingData.txt
 ``` 
-## Subsampled
+## Subsampled 11 560 052 SNPs -> 231 200 SNPs
 ``` 
 BASEDIR=02_angsdOutput/Dataset_I
 
 ## Prepare a geno file by subsampling one SNP in every 50 SNPs in the beagle file
-zcat $BASEDIR/BigN_wrap_nrep.beagle.gz | awk 'NR % 50 == 0' | cut -f 4- | gzip  > $BASEDIR/BigN_wrap_nrep.subsamp.50.beagle.gz
+zcat $BASEDIR/Leona20dec21.beagle.gz | awk 'NR % 50 == 0' | cut -f 4- | gzip  > $BASEDIR/Leona20dec21.subsamp.50.beagle.gz
 ## Prepare a pos file by subsampling one SNP in every 50 SNPs in the mafs filre
-zcat $BASEDIR/BigN_wrap_nrep.mafs.gz | cut -f 1,2 |  awk 'NR % 50 == 0' | sed 's/:/_/g'| gzip > $BASEDIR/BigN_wrap_nrep.subsamp.50.pos.gz
+zcat $BASEDIR/Leona20dec21.mafs.gz | cut -f 1,2 |  awk 'NR % 50 == 0' | sed 's/:/_/g'| gzip > $BASEDIR/Leona20dec21.subsamp.50.pos.gz
 ``` 
 
 
@@ -71,18 +71,18 @@ module load ngstools/20190624
 ```
 OUTPUTDIR=02_ngsLDOutput
 /services/tools/ngstools/20190624/ngsLD/ngsLD \
---geno $BASEDIR/BigN_wrap_nrep.subsamp.50.beagle.gz \
---pos $BASEDIR/BigN_wrap_nrep.subsamp.50.pos.gz \
+--geno $BASEDIR/Leona20dec21.subsamp.50.beagle.gz \
+--pos $BASEDIR/Leona20dec21.subsamp.50.pos.gz \
 --probs \
 --n_ind ? \
 --n_sites ? \
 --max_kb_dist ? \
 --n_threads ? \
---out $OUTPUTDIR/BigN_wrap_nrep.subsamp.50.ld
+--out $OUTPUTDIR/Leona20dec21.subsamp.50.ld
 ```
 ## LD pruning
 ```
-LDFILES=02_ngsLDOutput/BigN_wrap_nrep.subsamp.50.ld
+LDFILES=02_ngsLDOutput/Leona20dec21.subsamp.50.ld
 OUTPUTFOLDER=02_ngsLDOutput
 ```
 ```
@@ -90,7 +90,7 @@ perl /services/tools/ngstools/20190624/ngsLD/scripts/prune_graph.pl \
        --in_file $LDFILES \
        --max_kb_dist 2000 \
        --min_weight 0.5 \
-       --out $OUTPUTFOLDER/BigN_wrap_nrep.subsamp.50.id
+       --out $OUTPUTFOLDER/Leona20dec21.subsamp.50.id
 ```
 
 ## Pruned SNPs list
