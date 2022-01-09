@@ -31,8 +31,8 @@ zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/L
 ``` 
 ## Subsampled 11 560 052 SNPs -> 231 200 SNPs
 ``` 
-BASEDIR=02_angsdOutput/Dataset_I
-
+BASEDIR=/home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I
+ 
 ## Prepare a geno file by subsampling one SNP in every 50 SNPs in the beagle file
 zcat $BASEDIR/Leona20dec21.beagle.gz | awk 'NR % 50 == 0' | cut -f 4- | gzip  > $BASEDIR/Leona20dec21.subsamp.50.beagle.gz
 ## Prepare a pos file by subsampling one SNP in every 50 SNPs in the mafs filre
@@ -40,7 +40,7 @@ zcat $BASEDIR/Leona20dec21.mafs.gz | cut -f 1,2 |  awk 'NR % 50 == 0' | sed 's/:
 ``` 
 
 
-## LD estimation between SNPs
+## LD estimation between SNPs 
 ```
 module load tools
 module load ngs
@@ -69,21 +69,21 @@ module load R/4.0.0
 module load ngstools/20190624
 ```
 ```
-OUTPUTDIR=02_ngsLDOutput
+OUTPUTDIR=02_ngsLDOutput/Dataset_I
 /services/tools/ngstools/20190624/ngsLD/ngsLD \
 --geno $BASEDIR/Leona20dec21.subsamp.50.beagle.gz \
 --pos $BASEDIR/Leona20dec21.subsamp.50.pos.gz \
 --probs \
---n_ind ? \
---n_sites ? \
---max_kb_dist ? \
---n_threads ? \
+--n_ind 676 \
+--n_sites 231201 \
+--max_kb_dist 2000 \
+--n_threads 16 \
 --out $OUTPUTDIR/Leona20dec21.subsamp.50.ld
 ```
 ## LD pruning
 ```
-LDFILES=02_ngsLDOutput/Leona20dec21.subsamp.50.ld
-OUTPUTFOLDER=02_ngsLDOutput
+LDFILES=02_ngsLDOutput/Dataset_I/Leona20dec21.subsamp.50.ld
+OUTPUTFOLDER=02_ngsLDOutput/Dataset_I/
 ```
 ```
 perl /services/tools/ngstools/20190624/ngsLD/scripts/prune_graph.pl \
