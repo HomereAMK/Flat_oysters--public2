@@ -26,9 +26,9 @@ zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/L
 ```
 ##### Gets Missing Data (_Genotype Likelihoods_) 11 560 052 SNPs:
 ```
-#N_IND=`wc -l /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels`
-N_IND=`cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels | wc -l`
-zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk '{print $1"\t"$3"\t"$3*100/$N_IND}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.GL-MissingData.txt
+N_IND=`cat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | tail -n +2 | wc -l`
+
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk -v N_INDawk="$N_IND" '{print $1"\t"$3"\t"$3*100/N_INDawk}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.GL-MissingData.txt
 ``` 
 ## Subsampled 11 560 052 SNPs -> 231 200 SNPs
 ``` 
