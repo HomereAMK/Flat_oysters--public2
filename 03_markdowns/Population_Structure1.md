@@ -69,7 +69,7 @@ module load R/4.0.0
 module load ngstools/20190624
 ```
 ```
-OUTPUTDIR=02_ngsLDOutput/Dataset_I
+OUTPUTDIR=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I
 /services/tools/ngstools/20190624/ngsLD/ngsLD \
 --geno $BASEDIR/Leona20dec21.subsamp.50.beagle.gz \
 --pos $BASEDIR/Leona20dec21.subsamp.50.pos.gz \
@@ -82,8 +82,8 @@ OUTPUTDIR=02_ngsLDOutput/Dataset_I
 ```
 ## LD pruning
 ```
-LDFILES=02_ngsLDOutput/Dataset_I/Leona20dec21.subsamp.50.ld
-OUTPUTFOLDER=02_ngsLDOutput/Dataset_I/
+LDFILES=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21.subsamp.50.ld
+OUTPUTFOLDER=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/
 ```
 ```
 perl /services/tools/ngstools/20190624/ngsLD/scripts/prune_graph.pl \
