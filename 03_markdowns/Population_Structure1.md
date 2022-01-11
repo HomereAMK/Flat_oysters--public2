@@ -95,4 +95,4 @@ perl /services/tools/ngstools/20190624/ngsLD/scripts/prune_graph.pl \
 ```
 
 ## Pruned SNPs list
-
+176 432 SNPs
