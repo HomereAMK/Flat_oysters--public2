@@ -100,7 +100,6 @@ Re-run angsd with the produced Pruned SNPs list with no linked SNPs (--min_weigh
 
 ```
 # Load module angsd
-# Load module angsd
 module load tools ngs computerome_utils/2.0
 module load htslib/1.9
 module load bedtools/2.30.0
