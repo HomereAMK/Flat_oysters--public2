@@ -112,13 +112,13 @@ module load angsd/0.931
 REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome10scaffoldC3G.fasta
 BAMLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21
 OUTPUTDIR=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I
-SNPlist=Rscripts_local/03_results/
+SNPlist=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21.prunedlist
 ```
 
 ```
 angsd sites index $SNPlist
 
-angsd -b $BAMLIST -ref $REF -out $OUTPUTDIR/Leona20dec21_SNPs_11jan21 -sites $SNPlist \
+angsd -b $BAMLIST -ref $REF -out $OUTPUTDIR/Leona20dec21_SNPs_11jan22 -sites $SNPlist \
 -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -setMaxDepth 1000 -MinMaf 0.015 -SNP_pval 1e-6 -postCutoff 0.95 \
 -GL 2 -doMajorMinor 4 -doMaf 1 -doCounts 1 -doGlf 2 -doPost 2 -doGeno 2 -dumpCounts 2 -doHaploCall 1 -doIBS 1 -doDepth 1 \
 -doCov 1 -makeMatrix 1 -P 12
