@@ -33,11 +33,11 @@ zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/L
 ## Subsampled 11 560 052 SNPs -> 231 200 SNPs
 ``` 
 BASEDIR=/home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I
- 
+OUTPUTFOLDER=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I
 ## Prepare a geno file by subsampling one SNP in every 50 SNPs in the beagle file
-zcat $BASEDIR/Leona20dec21.beagle.gz | awk 'NR % 50 == 0' | cut -f 4- | gzip  > $BASEDIR/Leona20dec21.subsamp.50.beagle.gz
+zcat $BASEDIR/Leona20dec21.beagle.gz | awk 'NR % 50 == 0' | cut -f 4- | gzip  > $OUTPUTFOLDER/Leona20dec21.subsamp.50.beagle.gz
 ## Prepare a pos file by subsampling one SNP in every 50 SNPs in the mafs filre
-zcat $BASEDIR/Leona20dec21.mafs.gz | cut -f 1,2 |  awk 'NR % 50 == 0' | sed 's/:/_/g'| gzip > $BASEDIR/Leona20dec21.subsamp.50.pos.gz
+zcat $BASEDIR/Leona20dec21.mafs.gz | cut -f 1,2 |  awk 'NR % 50 == 0' | sed 's/:/_/g'| gzip > $OUTPUTFOLDER/Leona20dec21.subsamp.50.pos.gz
 ``` 
 
 
@@ -84,7 +84,7 @@ OUTPUTDIR=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Datase
 ## LD pruning
 ```
 LDFILES=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21.subsamp.50.ld
-OUTPUTFOLDER=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/
+OUTPUTFOLDER=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I
 ```
 ```
 perl /services/tools/ngstools/20190624/ngsLD/scripts/prune_graph.pl \
@@ -95,4 +95,34 @@ perl /services/tools/ngstools/20190624/ngsLD/scripts/prune_graph.pl \
 ```
 
 ## Pruned SNPs list
-176 432 SNPs
+SNPs list = 176 432 SNPs
+Re-run angsd with the produced Pruned SNPs list with no linked SNPs (--min_weight **0.5**: Minimum weight (in --weight_field) of an edge to assume nodes are connected)
+
+```
+# Load module angsd
+# Load module angsd
+module load tools ngs computerome_utils/2.0
+module load htslib/1.9
+module load bedtools/2.30.0
+module load pigz/2.3.4
+module load parallel/20210722
+module load angsd/0.931
+```
+```
+REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome10scaffoldC3G.fasta
+BAMLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21
+OUTPUTDIR=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I
+SNPlist=Rscripts_local/03_results/
+```
+
+```
+angsd sites index $SNPlist
+
+angsd -b $BAMLIST -ref $REF -out $OUTPUTDIR/Leona20dec21_SNPs_11jan21 -sites $SNPlist \
+-remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -setMaxDepth 1000 -MinMaf 0.015 -SNP_pval 1e-6 -postCutoff 0.95 \
+-GL 2 -doMajorMinor 4 -doMaf 1 -doCounts 1 -doGlf 2 -doPost 2 -doGeno 2 -dumpCounts 2 -doHaploCall 1 -doIBS 1 -doDepth 1 \
+-doCov 1 -makeMatrix 1 -P 12
+
+```
+
+
