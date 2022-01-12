@@ -12,6 +12,10 @@ PCA-based analyses
 :oyster:    use iqsub for all the following scripts in a separate screen   :oyster:
 
 ```
+#Create a Trial Dataset for testing scripts purposes
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | head -n 1001 | gzip > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.MyTrialData.beagle.gz
+
+
 #Get the label list from the bam list
 awk '{split($0,a,"/"); print a[9]}' /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21 | awk '{split($0,b,"_"); print b[1]"_"b[2]}' > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels
 ```
