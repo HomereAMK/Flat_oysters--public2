@@ -13,9 +13,47 @@ Admixture-based analyses: Estimation of Individual Ancestries.
 
 _Runs ngsAdmix--v32 on the .beagle file using the wrapper_ngsAdmix:
 _
+```
+# Load module angsd
+module load tools
+module load ngs
+module load htslib/1.11
+module load angsd/0.935
+
+# Load modules for PCAngsd
+module load anaconda2/4.4.0
+module load pcangsd/20190125
+
+#Load module for R
+module load gsl/2.6
+module load imagemagick/7.0.10-13
+module load gdal/2.2.3
+module load geos/3.8.0
+module load jags/4.2.0
+module load hdf5
+module load netcdf
+module load boost/1.74.0
+module load openssl/1.0.0
+module load lapack
+module load udunits/2.2.26
+module load proj/7.0.0
+module load gcc/10.2.0
+module load intel/perflibs/64/2020_update2
+module load R/4.0.0
+
+# We also need ngsTools +ngsadmix
+module load perl/5.30.2         
+module load samtools/1.11
+module load ngstools/20190624
+module load ngsadmix/32
+```
 > used to do it with a loop... but it takes so long that I decided to run each individual K separately.
 ```
 #wrapper_ngsAdmix on a Trial Dataset for testing scripts purposes
 #used to do it with a loop... but it takes so long that I decided to run each individual K separately.
-/home/projects/dp_00007/apps/Scripts/wrapper_ngsAdmix.sh -P 40 -debug 1 -likes /home/projects/dp_00007/people/geopac/Analyses/Lumpfish/Lumpfish_ANGSD/BSG_Lumpfish--AllSamples.beagle.gz -K 2 -minMaf 0 -tol 1e-6 -tolLike50 1e-3 -maxiter 10000 -o /home/projects/dp_00007/people/geopac/Analyses/Lumpfish/Lumpfish_ngsAdmix/BSG_Lumpfish--AllSamples.2
+/home/projects/dp_00007/apps/Scripts/wrapper_ngsAdmix.sh -P 40 -debug 1 -likes \
+/home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.MyTrialData.beagle.gz \ 
+-K 2 \
+-minMaf 0 -tol 1e-6 -tolLike50 1e-3 -maxiter 10000 -o \
+/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.2
 ```
