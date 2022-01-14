@@ -60,11 +60,17 @@ BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I
 OUTPUT=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.9
 K=9
 /services/tools/ngsadmix/32/NGSadmix -likes "$BEAGLE" -K "$K" -outfiles "$OUTPUT" -P 28
-
+```
 #plot with ngstools Rscript
 ```
 Rscript /services/tools/ngstools/20190624/Scripts/plotAdmix.R -i "$OUTPUT" -o "$OUTPUT".pdf &> /dev/null
 Rscript /services/tools/ngstools/20190624/Scripts/plotAdmix.R -i /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.2 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.2.pdf &> /dev/null
 
+#With Unpruned Dataset (11M SNPs)
+```
+BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz
+OUTPUT=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Dataset_I/Leona20dec21.2
+K=9
+/services/tools/ngsadmix/32/NGSadmix -likes "$BEAGLE" -K "$K" -outfiles "$OUTPUT" -P 28
 ```
 
