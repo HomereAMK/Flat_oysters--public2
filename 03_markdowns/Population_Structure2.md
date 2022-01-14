@@ -51,9 +51,20 @@ module load ngsadmix/32
 ```
 #wrapper_ngsAdmix on a Trial Dataset for testing scripts purposes
 #used to do it with a loop... but it takes so long that I decided to run each individual K separately.
-/home/projects/dp_00007/apps/Scripts/wrapper_ngsAdmix.sh -P 40 -debug 1 -likes \
-/home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.MyTrialData.beagle.gz \ 
--K 2 \
--minMaf 0 -tol 1e-6 -tolLike50 1e-3 -maxiter 10000 -o \
-/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.2
+/home/projects/dp_00007/apps/Scripts/wrapper_ngsAdmix.sh -P 40 -debug 1 -likes /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.MyTrialData.beagle.gz -K 2 -minMaf 0 -tol 1e-6 -tolLike50 1e-3 -maxiter 10000 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.2
 ```
+
+#ngsAdmix (no wrapper) on a Trial Dataset for testing scripts purposes
+```
+BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.MyTrialData.beagle.gz
+OUTPUT=/home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.9
+K=9
+/services/tools/ngsadmix/32/NGSadmix -likes "$BEAGLE" -K "$K" -outfiles "$OUTPUT" -P 28
+
+#plot with ngstools Rscript
+```
+Rscript /services/tools/ngstools/20190624/Scripts/plotAdmix.R -i "$OUTPUT" -o "$OUTPUT".pdf &> /dev/null
+Rscript /services/tools/ngstools/20190624/Scripts/plotAdmix.R -i /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.2 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.2.pdf &> /dev/null
+
+```
+
