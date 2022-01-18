@@ -54,6 +54,11 @@ module load ngsadmix/32
 /home/projects/dp_00007/apps/Scripts/wrapper_ngsAdmix.sh -P 40 -debug 1 -likes /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.MyTrialData.beagle.gz -K 2 -minMaf 0 -tol 1e-6 -tolLike50 1e-3 -maxiter 10000 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.2
 ```
 
+```
+#wrapper_ngsAdmix with 11M snps datasets "Leona20dec21"
+/home/projects/dp_00007/apps/Scripts/wrapper_ngsAdmix.sh -P 40 -debug 1 -likes /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz -K 2 -minMaf 0 -tol 1e-6 -tolLike50 1e-3 -maxiter 10000 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsAdmixOutput/Trial/Leona20dec21.MyTrialData--AllSamples.2
+```
+
 #ngsAdmix (no wrapper) on a Trial Dataset for testing scripts purposes
 ```
 BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.MyTrialData.beagle.gz
