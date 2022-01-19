@@ -80,4 +80,6 @@ K=2
 ```
 
 #wrapper_ngsAdmix on a pruned Dataset (195446 SNPs)
+```
 /home/projects/dp_00007/apps/Scripts/wrapper_ngsAdmix.sh -P 40 -debug 1 -likes /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz -K 2 -minMaf 0 -tol 1e-6 -tolLike50 1e-3 -maxiter 10000 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-AllSamples.2
+```
