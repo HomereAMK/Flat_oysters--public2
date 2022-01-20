@@ -7,6 +7,7 @@ PCA-based analyses
    - [LD estimation between SNPs](#LD-estimation-between-SNPs)
    - [LD pruning](#LD-pruning)
    - [Pruned SNPs list](#Pruned-SNPs-list)
+   - [Reduce the % of Missing Data](#Reduce the % of Missing Data)
 
 ## Genome-wide-pca
 :oyster:    use iqsub for all the following scripts in a separate screen   :oyster:
@@ -32,7 +33,7 @@ zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/L
 ```
 N_SITES=`zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | tail -n +2 | wc -l`
 
-zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk -v N_SITESawk="$N_SITES" '{print $1"\t"$3"\t"$3*100/N_SITESawk}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.GL-MissingData.txt
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk -v N_INDawk="$N_IND" '{print $1"\t"$3"\t"$3*100/N_INDawk}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.GL-MissingData.txt
 ``` 
 ## Subsampled 11 560 052 SNPs -> 231 200 SNPs
 ``` 
@@ -136,5 +137,37 @@ zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/L
 ```
 N_SITES=`zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | wc -l`
 
-zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk -v N_SITESawk="$N_SITES" '{print $1"\t"$3"\t"$3*100/N_SITESawk}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.GL-MissingData.txt
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk -v N_INDawk="$N_IND" '{print $1"\t"$3"\t"$3*100/N_INDawk}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.GL-MissingData.txt
 ``` 
+
+## Reduce the % of Missing Data
+Missing data in the pruned SNPs beagle file ranged from 19% to 92% (because no -minInd filter).
+66% of the data with more than 50% of missing data in the pruned SNPs beagle file.
+Low confidence in the ngsAdmix or MDS/PCA results.
+```
+module load tools computerome_utils/2.0
+module load gcc/11.1.0
+module load intel/perflibs/2020_update4
+module load R/4.1.0
+```
+```
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | cut -f 1 | sed -z 's/\n/\t/g' | awk '{print "Sample_ID", "Population", $0}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '
+{ 
+    for (i=1; i<=NF; i++)  {
+        a[NR,i] = $i
+    }
+}
+NF>p { p = NF }
+END {    
+    for(j=1; j<=p; j++) {
+        str=a[1,j]
+        for(i=2; i<=NR; i++){
+            str=str"\t"a[i,j];
+        }
+        print str
+    }
+}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk '{split($1,a,"_"); print $1"\t"a[1]"\t"$0}' | cut -f 1,2,4- | awk '{split($2,b,"-"); print $1"\t"b[2]"\t"$0}' | cut -f 1,2,5- | cat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv - | Rscript --vanilla --slave /home/projects/dp_00007/people/geopac/Software/Scripts/TEMP.R -m .25 -p 39 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_Missingness/Leona20dec21_SNPs_11jan22.25%missingness.list
+```
+>-m is the maximum missing that allowed. For instance, -m .25 ----> will keep SNPs that have a maximum of 25% of missing data in EACH and ALL populations.
+>-p is the number of populations you have.
