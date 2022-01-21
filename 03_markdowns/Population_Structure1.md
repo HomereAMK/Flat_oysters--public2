@@ -172,4 +172,5 @@ END {
 >-m is the maximum missing that allowed. For instance, -m .25 ----> will keep SNPs that have a maximum of 25% of missing data in EACH and ALL populations.
 >-p is the number of populations you have.
 >-e is the population to exclude.
+
 We will try to get the number of SNPs 
