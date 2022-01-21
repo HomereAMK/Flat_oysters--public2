@@ -7,7 +7,7 @@ PCA-based analyses
    - [LD estimation between SNPs](#LD-estimation-between-SNPs)
    - [LD pruning](#LD-pruning)
    - [Pruned SNPs list](#Pruned-SNPs-list)
-   - [Reduce the % of Missing Data](#Reduce the % of Missing Data)
+   - [Reduce the % of Missing Data](#Reduce-the-%-of-Missing-Data)
 
 ## Genome-wide-pca
 :oyster:    use iqsub for all the following scripts in a separate screen   :oyster:
