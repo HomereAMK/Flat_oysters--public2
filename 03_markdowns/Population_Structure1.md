@@ -151,15 +151,15 @@ module load intel/perflibs/2020_update4
 module load R/4.1.0
 ```
 ```
-zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | cut -f 1 | sed -z 's/\n/\t/g' | awk '{print "Sample_ID", "Population", $0}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | cut -f 1 | sed -z 's/\n/\t/g' | awk '{print "Sample_ID""\t""Population""\t"$0}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv
 zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '
-{ 
+{
     for (i=1; i<=NF; i++)  {
         a[NR,i] = $i
     }
 }
 NF>p { p = NF }
-END {    
+END {
     for(j=1; j<=p; j++) {
         str=a[1,j]
         for(i=2; i<=NR; i++){
@@ -167,7 +167,9 @@ END {
         }
         print str
     }
-}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk '{split($1,a,"_"); print $1"\t"a[1]"\t"$0}' | cut -f 1,2,4- | awk '{split($2,b,"-"); print $1"\t"b[2]"\t"$0}' | cut -f 1,2,5- | cat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv - | Rscript --vanilla --slave /home/projects/dp_00007/people/geopac/Software/Scripts/TEMP.R -m .25 -p 39 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_Missingness/Leona20dec21_SNPs_11jan22.25%missingness.list
+}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.annot - | cat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv - | Rscript --vanilla --slave /home/projects/dp_00007/people/geopac/Software/Scripts/TEMP.R -m .25 -e HVAD -p 39 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_Missingness/Leona20dec21_SNPs_11jan22.25%missingness.list
 ```
 >-m is the maximum missing that allowed. For instance, -m .25 ----> will keep SNPs that have a maximum of 25% of missing data in EACH and ALL populations.
 >-p is the number of populations you have.
+>-e is the population to exclude.
+We will try to get the number of SNPs 
