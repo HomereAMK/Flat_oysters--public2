@@ -151,7 +151,10 @@ module load intel/perflibs/2020_update4
 module load R/4.1.0
 ```
 ```
+#Create a Header.tsv
 zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | cut -f 1 | sed -z 's/\n/\t/g' | awk '{print "Sample_ID""\t""Population""\t"$0}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv
+```
+```
 zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '
 {
     for (i=1; i<=NF; i++)  {
