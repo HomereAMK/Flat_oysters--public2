@@ -173,4 +173,4 @@ END {
 >-p is the number of populations you have.
 >-e is the population to exclude.
 
-We will try to get the number of SNPs 
+We will try to get the number of SNPs for .25 .50 .66 of missing data percentage.
