@@ -177,7 +177,31 @@ END {
 >-e is the population to exclude.
 
 We will try to get the number of SNPs for .25 .50 .66 of missing data percentage.
+>For the Pruned dataset
 | ">25% Missing data"  | ">50% Missing data" |">66% Missing data" |
 | ------------- | ------------- |------------- |
 | SNPs  | SNPs  | SNPs  |
 | 0  | 1098  | 32436 |
+I have 0 SNPs when I requested that at least 75% of the individuals in each population have data for the Pruned dataset (195446 SNPs).
+I have 1098 SNPs when I requested that at least 50% of the individuals in each population have data for the Pruned dataset (195446 SNPs).
+I have 32436 SNPs when I requested that at least 34% of the individuals in each population have data for the Pruned dataset (195446 SNPs).
+
+#Unpruned Dataset
+```
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '
+{
+    for (i=1; i<=NF; i++)  {
+        a[NR,i] = $i
+    }
+}
+NF>p { p = NF }
+END {
+    for(j=1; j<=p; j++) {
+        str=a[1,j]
+        for(i=2; i<=NR; i++){
+            str=str"\t"a[i,j];
+        }
+        print str
+    }
+}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.annot - | cat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv - | Rscript --vanilla --slave /home/projects/dp_00007/people/geopac/Software/Scripts/TEMP.R -m .66 -e HVAD -p 39 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_Missingness/Leona20dec21_SNPs_11jan22.66missingness.list
+```
