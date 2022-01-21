@@ -170,10 +170,14 @@ END {
         }
         print str
     }
-}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.annot - | cat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv - | Rscript --vanilla --slave /home/projects/dp_00007/people/geopac/Software/Scripts/TEMP.R -m .25 -e HVAD -p 39 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_Missingness/Leona20dec21_SNPs_11jan22.25%missingness.list
+}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.annot - | cat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv - | Rscript --vanilla --slave /home/projects/dp_00007/people/geopac/Software/Scripts/TEMP.R -m .66 -e HVAD -p 39 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_Missingness/Leona20dec21_SNPs_11jan22.66missingness.list
 ```
->-m is the maximum missing that allowed. For instance, -m .25 ----> will keep SNPs that have a maximum of 25% of missing data in EACH and ALL populations.
+>-m is the maximum missing that allowed. For instance, -m .50 ----> will keep SNPs that have a maximum of 25% of missing data in EACH and ALL populations.
 >-p is the number of populations you have.
 >-e is the population to exclude.
 
 We will try to get the number of SNPs for .25 .50 .66 of missing data percentage.
+| ">25% Missing data"  | ">50% Missing data" |">66% Missing data" |
+| ------------- | ------------- |------------- |
+| SNPs  | SNPs  | SNPs  |
+| 0  | 1098  | 32436 |
