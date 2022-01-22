@@ -187,8 +187,10 @@ I have 1098 SNPs when I requested that at least 50% of the individuals in each p
 I have 32436 SNPs when I requested that at least 34% of the individuals in each population have data for the Pruned dataset (195446 SNPs).
 
 #Unpruned Dataset
+#Create a Header.tsv
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | tail -n +2 | cut -f 1 | sed -z 's/\n/\t/g' | awk '{print "Sample_ID""\t""Population""\t"$0}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21-HEADER.tsv
 ```
-zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '
 {
     for (i=1; i<=NF; i++)  {
         a[NR,i] = $i
@@ -203,5 +205,5 @@ END {
         }
         print str
     }
-}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.annot - | cat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22-HEADER.tsv - | Rscript --vanilla --slave /home/projects/dp_00007/people/geopac/Software/Scripts/TEMP.R -m .66 -e HVAD -p 39 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_Missingness/Leona20dec21_SNPs_11jan22.66missingness.list
+}' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.annot - | cat /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21-HEADER.tsv - | Rscript --vanilla --slave /home/projects/dp_00007/people/geopac/Software/Scripts/TEMP.R -m .25 -e HVAD -p 39 -o /home/projects/dp_00007/people/hmon/Flat_oysters/02_Missingness/Leona20dec21.25missingness.list
 ```
