@@ -45,7 +45,28 @@ do
         fi
     done
 done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Fst.tsv
+# get the sfs step Trial
+cd /home/projects/dp_00007/people/hmon/Flat_oysters/Fst
 
+POP=("AGAB" "NISS" "RYAN" "MOLU")
+
+for i1 in `seq 0 $((${#POP[@]}-2))`
+do
+    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
+    do
+        pop1="Jan22--Unfolded_${POP[i1]}"
+        pop2="Jan22--Unfolded_${POP[i2]}"
+        N_SITES=`realSFS print $pop1.saf.idx $pop2.saf.idx | wc -l`
+        echo -ne "${POP[i1]}\t${POP[i2]}\t$N_SITES\t"
+        if [[ $N_SITES == 0 ]]; then
+            echo "NA"
+        else
+            realSFS $pop1.saf.idx $pop2.saf.idx -fold 1 -P 40 > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs
+            realSFS fst index $pop1.saf.idx $pop2.saf.idx -sfs /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs -fold 1 -P 40 -fstout /home/projects/dp_00007/data/geopac/angsd_Fst/Lumpfish/${POP[i1]}.${POP[i2]}_Ind66
+            realSFS fst stats /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -P 40
+        fi
+    done
+done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Fst.tsv
 # sfs with a sliding window step
 POP=("ORIS" "CORS" "MOLU" "ZECE" "CRES" "PONT" "RIAE" "MORL" "USAM" "TOLL" "COLN" "BARR" "TRAL" "CLEW" "NELL" "RYAN" "GREV" "WADD" "FURI" "NISS" "LOGS" "VENO" "HALS" "THIS" "INNE" "HAUG" "HAFR" "AGAB" "OSTR" "VAGS" "LANG" "BUNN" "DOLV" "KALV" "HFJO" "RAMS" "ORNE" "HYPP")
 for i1 in `seq 0 $((${#POP[@]}-2))`
