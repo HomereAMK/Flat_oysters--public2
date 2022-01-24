@@ -5,11 +5,10 @@
 
 # Cleans the environment ~ 
 rm(list=ls())
-unique(fulldf$Population)
 
 # Sets working directory ~
 #setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-setwd("~/Desktop/Scripts/Flat_oysters/04_local_R")
+setwd("~/Desktop/Scripts/")
 
 # Loads required packages ~
 pacman::p_load(optparse, tidyverse, plyr, RColorBrewer, extrafont, ggforce, ggstar, RcppCNPy)
@@ -20,9 +19,9 @@ pacman::p_load(optparse, tidyverse, plyr, RColorBrewer, extrafont, ggforce, ggst
 
 
 #### Loads data ~ ####
-data <- as.matrix(read.table("02_data/Leona20dec21_SNPs_11jan22.covMat"))
-annot <- read.table("02_data/Bam_list_13dec21.annot", sep = "\t", header = FALSE, stringsAsFactors = FALSE)
-MissingData <- read.table("02_data/Leona20dec21_SNPs_11jan22.GL-MissingData.txt", sep = "\t", header = FALSE)
+data <- as.matrix(read.table("Data/PCA/Leona20dec21_SNPs_11jan22.covMat"))
+annot <- read.table("Data/PCA/Bam_list_13dec21.annot", sep = "\t", header = FALSE, stringsAsFactors = FALSE)
+MissingData <- read.table("Data/PCA/Leona20dec21_SNPs_11jan22.GL-MissingData.txt", sep = "\t", header = FALSE)
 colnames(MissingData) <- c("Sample_ID", "NumberMissing", "PercentageMissing")
 
 
@@ -85,12 +84,12 @@ varPC3 <-(PCA$values[3]/PCA_Eigenval_Sum)*100
 PCA_MissData <-ggplot(fulldf, aes_string(x = "PCA_1", y = "PCA_2", fill = "MissingCategory")) +
   geom_point(alpha = .9, size = 2.75, shape = 21, colour = "#000000") +
   scale_fill_manual(values = c("#fef0d9", "#fdd49e", "#fdbb84", "#fc8d59", "#e34a33", "#b30000")) +
-  scale_x_continuous("PC 1 (1.20%)",
+  scale_x_continuous(paste("PC1, ", round(varPC1,digits =3), "% variation", sep=""),
                      #breaks = c(0.99, 1, 1.01),
                      #labels = c("0.99", "1", "1.01"),
                      #limits = c(-0.25, 0.15),
                      expand = c(.015, .015)) +
-  scale_y_continuous("PC 2 (0.78%)",
+  scale_y_continuous(paste("PC2, ", round(varPC2,digits =3), "% variation", sep=""),
                      #breaks = c(-0.05, -0.025, 0, 0.025, 0.05), 
                      #labels = c("-0.05", "-0.025", "0", "0.025", "0.05"), 
                      #limits = c(-0.0525, 0.0525),
@@ -114,20 +113,20 @@ PCA_MissData <-ggplot(fulldf, aes_string(x = "PCA_1", y = "PCA_2", fill = "Missi
 
 
 # Saves plot ~
-ggsave(PCA_MissData, file = "03_results/PRUNED-Leona_PCA_MissingCategory.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
+ggsave(PCA_MissData, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/Leona_PCA_MissingCategory.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
 
 
 #### Create PCA plot Missing Data - Labels #### 
-LABELPCA_MissData  <-ggplot(fulldf, aes(PCA_1, PCA_2, label = Population)) +
+LABELPCA_MissData  <-ggplot(fulldf, aes(PCA_1, PCA_2, label = Sample_ID)) +
       geom_point()+
       geom_label(aes(fill = MissingCategory))+
           scale_fill_manual(values = c("#fef0d9", "#fdd49e", "#fdbb84", "#fc8d59", "#e34a33", "#b30000"))+
-  scale_x_continuous("PC 1 (1.20%)",
+  scale_x_continuous(paste("PC1, ", round(varPC1,digits =3), "% variation", sep=""),
                      #breaks = c(0.99, 1, 1.01),
                      #labels = c("0.99", "1", "1.01"),
                      #limits = c(-0.25, 0.15),
                      expand = c(.015, .015)) +
-  scale_y_continuous("PC 2 (0.78%)",
+  scale_y_continuous(paste("PC2, ", round(varPC2,digits =3), "% variation", sep=""),
                      #breaks = c(-0.05, -0.025, 0, 0.025, 0.05), 
                      #labels = c("-0.05", "-0.025", "0", "0.025", "0.05"), 
                      #limits = c(-0.0525, 0.0525),
@@ -150,19 +149,19 @@ LABELPCA_MissData  <-ggplot(fulldf, aes(PCA_1, PCA_2, label = Population)) +
                              label.theme = element_text(size = 14)))
 
 # Saves plot ~
-ggsave(LABELPCA_MissData, file = "03_results/PRUNED-Leona_PCA_MissingCategory.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
+ggsave(LABELPCA_MissData, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/Leona_PCA_LabelMissingCategory.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
 
 #### Create PCA plot Missing Data - Labels #### 
-LABELPCA_MissData_1vs3  <-ggplot(fulldf, aes(PCA_1, PCA_3, label = Population)) +
+LABELPCA_MissData_1vs3  <-ggplot(fulldf, aes(PCA_1, PCA_3, label = Sample_ID)) +
   geom_point()+
   geom_label(aes(fill = MissingCategory))+
   scale_fill_manual(values = c("#fef0d9", "#fdd49e", "#fdbb84", "#fc8d59", "#e34a33", "#b30000"))+
-  scale_x_continuous("PC 1 (1.20%)",
+  scale_x_continuous(paste("PC1, ", round(varPC1,digits =3), "% variation", sep=""),
                      #breaks = c(0.99, 1, 1.01),
                      #labels = c("0.99", "1", "1.01"),
                      #limits = c(-0.25, 0.15),
                      expand = c(.015, .015)) +
-  scale_y_continuous("PC 3 (0.78%)",
+  scale_y_continuous(paste("PC2, ", round(varPC2,digits =3), "% variation", sep=""),
                      #breaks = c(-0.05, -0.025, 0, 0.025, 0.05), 
                      #labels = c("-0.05", "-0.025", "0", "0.025", "0.05"), 
                      #limits = c(-0.0525, 0.0525),
@@ -185,7 +184,7 @@ LABELPCA_MissData_1vs3  <-ggplot(fulldf, aes(PCA_1, PCA_3, label = Population)) 
                              label.theme = element_text(size = 14)))
 
 # Saves plot ~
-ggsave(LABELPCA_MissData_1vs3, file = "03_results/PRUNED-Leona_PCA_MissingCategory_1vs3.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
+ggsave(LABELPCA_MissData_1vs3, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/Leona_PCA_MissingCategory_1vs3.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
 
 
 
@@ -206,19 +205,19 @@ PCA<- ggplot(data = fulldf) +
                                  "#02630C", "#02630C","#02630C","#02630C", "#02630C", "#02630C",
                                  "#240377", "#240377", "#240377", "#240377", "#240377", "#240377", "#240377", "#240377", "#240377",
                                  "#45D1F7", "#45D1F7", "#45D1F7", "#45D1F7", "#45D1F7", "#45D1F7" ))+
-  scale_shape_manual(values=c(15,
-                              25,
-                              15, 17, 18, 
-                              25,20,
-                              15,
-                              15,
-                              3, 6,12,
-                              16,15,
-                              25,27,
-                              3,1,
-                              8, 9, 10, 11, 12,13,
-                              8, 9, 10, 11, 12,13,14,18,19,
-                              21,22, 23, 24, 25, 20))+
+  scale_shape_manual(values=c(16,
+                              17,
+                              16, 17, 18, 
+                              16,17,
+                              18,
+                              17,
+                              16,17,18,
+                              18,16,
+                              17,16,
+                              17,18,
+                              10, 6, 9, 8, 14,11,
+                              10, 6, 9, 8, 14,11,0,1,12,
+                              10, 6, 9, 8, 14,11))+
   xlab(paste("PC1, ", round(varPC1,digits =3), "% variation", sep="")) + 
   ylab(paste("PC2, ",round(varPC2, digits = 3),"% variation", sep="")) + 
   theme(legend.key = element_blank()) +
@@ -232,7 +231,7 @@ PCA<- ggplot(data = fulldf) +
   theme(panel.border = element_blank())
 
 # Saves plot ~
-ggsave(PCA, file = "03_results/PRUNED-Leona_PCA.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
+ggsave(PCA, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/PRUNED-Leona_PCA.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
 
 #### Create PCA plot With Countries colors 1vs3 #### 
 PCA_1vs3<- ggplot(data = fulldf) + 
@@ -251,19 +250,19 @@ PCA_1vs3<- ggplot(data = fulldf) +
                                  "#02630C", "#02630C","#02630C","#02630C", "#02630C", "#02630C",
                                  "#240377", "#240377", "#240377", "#240377", "#240377", "#240377", "#240377", "#240377", "#240377",
                                  "#45D1F7", "#45D1F7", "#45D1F7", "#45D1F7", "#45D1F7", "#45D1F7" ))+
-  scale_shape_manual(values=c(15,
-                              25,
-                              15, 17, 18, 
-                              25,20,
-                              15,
-                              15,
-                              3, 6,12,
-                              16,15,
-                              25,27,
-                              3,1,
-                              8, 9, 10, 11, 12,13,
-                              8, 9, 10, 11, 12,13,14,18,19,
-                              21,22, 23, 24, 25, 20))+
+  scale_shape_manual(values=c(16,
+                              17,
+                              16, 17, 18, 
+                              16,17,
+                              18,
+                              17,
+                              16,17,18,
+                              18,16,
+                              17,16,
+                              17,18,
+                              10, 6, 9, 8, 14,11,
+                              10, 6, 9, 8, 14,11,0,1,12,
+                              10, 6, 9, 8, 14,11))+
   xlab(paste("PC1, ", round(varPC1,digits =3), "% variation", sep="")) + 
   ylab(paste("PC3, ",round(varPC3, digits = 3),"% variation", sep="")) + 
   theme(legend.key = element_blank()) +
@@ -277,8 +276,11 @@ PCA_1vs3<- ggplot(data = fulldf) +
   theme(panel.border = element_blank())
 
 # Saves plot ~
-ggsave(PCA_1vs3, file = "03_results/PRUNED-Leona_PCA_1vs3.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
+ggsave(PCA_1vs3, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/PRUNED-Leona_PCA_1vs3.pdf", device = cairo_pdf, scale = 1.1, width = 12, height = 8, dpi = 600)
 
 #
 ##
 ### The END ~~~~~
+
+#### Loadings ####
+
