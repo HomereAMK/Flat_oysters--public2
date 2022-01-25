@@ -46,7 +46,7 @@ do
     done
 done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Fst.tsv
 # get the sfs step Trial
-cd /home/projects/dp_00007/people/hmon/Flat_oysters/Fst
+cd /home/projects/dp_00007/data/hmon/angsd_Fst
 
 POP=("AGAB" "NISS" "RYAN" "MOLU")
 
@@ -61,9 +61,9 @@ do
         if [[ $N_SITES == 0 ]]; then
             echo "NA"
         else
-            realSFS $pop1.saf.idx $pop2.saf.idx -fold 1 -P 40 > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs
-            realSFS fst index $pop1.saf.idx $pop2.saf.idx -sfs /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs -fold 1 -P 40 -fstout /home/projects/dp_00007/data/geopac/angsd_Fst/Lumpfish/${POP[i1]}.${POP[i2]}_Ind66
-            realSFS fst stats /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -P 40
+            realSFS $pop1.saf.idx $pop2.saf.idx -fold 1 -P 40 > /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs
+            realSFS fst index $pop1.saf.idx $pop2.saf.idx -sfs /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs -fold 1 -P 40 -fstout /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_fstout
+            realSFS fst stats /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -P 40
         fi
     done
 done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Fst.tsv
