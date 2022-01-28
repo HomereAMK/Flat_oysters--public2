@@ -7,6 +7,16 @@ module load pigz/2.3.4
 module load parallel/20210722
 module load angsd/0.935
 ```
+# Create fst list
+```
+POP=("ORIS" "CORS" "MOLU" "ZECE" "CRES" "PONT" "RIAE" "MORL" "USAM" "TOLL" "COLN" "BARR" "TRAL" "CLEW" "NELL" "RYAN" "GREV" "WADD" "FURI" "NISS" "LOGS" "VENO" "HALS" "THIS" "INNE" "HAUG" "HAFR" "AGAB" "OSTR" "VAGS" "LANG" "BUNN" "DOLV" "KALV" "HFJO" "RAMS" "ORNE" "HYPP")
+
+for query in ${POP[*]}
+do 
+    grep ${query} /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21 > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_${query}-Fst.list
+
+done
+```
 
 # unfolded step
 # for NISS pop only
@@ -24,8 +34,7 @@ REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome
 /home/projects/dp_00007/apps/Scripts/wrapper_angsd.sh -debug 2 -nThreads 40 -ref $REF -anc $REF -bam /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_AGAB-Fst.list -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -minInd $((N_IND*2/3)) -GL 1 -doSaf 1 -out /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Unfolded_AGAB
 ```
 # get the sfs step
-cd /home/projects/dp_00007/people/hmon/Flat_oysters/Fst
-
+cd /home/projects/dp_00007/data/hmon/angsd_Fst/
 POP=("ORIS" "CORS" "MOLU" "PONT" "MORL" "USAM"  "BARR" "TRAL" "CLEW" "NELL" "RYAN" "GREV" "WADD" "NISS" "LOGS" "HALS" "THIS" "INNE" "HAUG" "HAFR" "AGAB" "OSTR" "VAGS" "LANG" "BUNN" "DOLV" "KALV" "HFJO" "RAMS" "ORNE" "HYPP")
 
 for i1 in `seq 0 $((${#POP[@]}-2))`
@@ -81,15 +90,7 @@ do
 done
 
 
-```
-POP=("ORIS" "CORS" "MOLU" "ZECE" "CRES" "PONT" "RIAE" "MORL" "USAM" "TOLL" "COLN" "BARR" "TRAL" "CLEW" "NELL" "RYAN" "GREV" "WADD" "FURI" "NISS" "LOGS" "VENO" "HALS" "THIS" "INNE" "HAUG" "HAFR" "AGAB" "OSTR" "VAGS" "LANG" "BUNN" "DOLV" "KALV" "HFJO" "RAMS" "ORNE" "HYPP")
 
-for query in ${POP[*]}
-do 
-    grep ${query} /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21 > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_${query}-Fst.list
-
-done
-```
 
 
 # for ORIS pop
