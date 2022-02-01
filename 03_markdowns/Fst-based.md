@@ -85,14 +85,25 @@ do
     do
         pop1="${POP[i1]}"
         pop2="${POP[i2]}"
-             realSFS fst stats2 /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -win 5000 -step 5000 | cut -f 2- | tail -n +2 | awk '{print $1"\t"$1":"$2"\t"$2-5000"\t"$2"\t"$3"\t"$4}' > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/slidingwindow/SlWin_${POP[i1]}.${POP[i2]}_Jan22_5K--Fst.tsv 
+             realSFS fst stats2 /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -win 15000 -step 5000 | cut -f 2- | tail -n +2 | awk '{print $1"\t"$1":"$2"\t"$2-5000"\t"$2"\t"$3"\t"$4}' > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/slidingwindow/SlWin_${POP[i1]}.${POP[i2]}_Jan22_15K--Fst.tsv 
     done
 done
 
 
 
 
-
+# Trial window sfs
+cd /home/projects/dp_00007/data/hmon/angsd_Fst
+POP=("AGAB" "NISS" "RYAN" "MOLU")
+for i1 in `seq 0 $((${#POP[@]}-2))`
+do
+    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
+    do
+        pop1="${POP[i1]}"
+        pop2="${POP[i2]}"
+             realSFS fst stats2 /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -win 15000 -step 5000 | cut -f 2- | tail -n +2 | awk '{print $1"\t"$1":"$2"\t"$2-5000"\t"$2"\t"$3"\t"$4}' > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/slidingwindow/SlWin_${POP[i1]}.${POP[i2]}_31Jan22_15K_trial4pop--Fst.tsv 
+    done
+done
 # for ORIS pop
 N_IND=`cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_ORIS-Fst.list | wc -l`
 REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome10scaffoldC3G.fasta
