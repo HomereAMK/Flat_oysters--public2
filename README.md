@@ -9,6 +9,7 @@ lcWGS pipeline analysis of Flat oysters (<i>Ostrea edulis</i>) post data-process
 [Phylogeography](https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Mitochondrial_phylogeo.md)
 ### SFS-based analysis
 (https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/SFS-based.md)
+[Fst method comparison with Trial Dataset](https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Fst-based2.md)
 ### Fst-based analysis
 [Fst Manhattan plot](https://github.com/therkildsen-lab/Flat_oysters/blob/main/03_markdowns/Fst-based.md)
 # Side notes

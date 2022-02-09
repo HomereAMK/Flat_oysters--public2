@@ -18,6 +18,7 @@ do
 done
 ```
 
+
 # unfolded step
 # for NISS pop only
 ```
@@ -33,81 +34,8 @@ REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome
 
 /home/projects/dp_00007/apps/Scripts/wrapper_angsd.sh -debug 2 -nThreads 40 -ref $REF -anc $REF -bam /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_AGAB-Fst.list -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -minInd $((N_IND*2/3)) -GL 1 -doSaf 1 -out /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Unfolded_AGAB
 ```
-# get the sfs step
-```
-cd /home/projects/dp_00007/data/hmon/angsd_Fst/
-POP=("ORIS" "CORS" "MOLU" "PONT" "MORL" "USAM"  "BARR" "TRAL" "CLEW" "NELL" "RYAN" "GREV" "WADD" "NISS" "LOGS" "HALS" "THIS" "INNE" "HAUG" "HAFR" "AGAB" "OSTR" "VAGS" "LANG" "BUNN" "DOLV" "KALV" "HFJO" "RAMS" "ORNE" "HYPP")
-
-for i1 in `seq 0 $((${#POP[@]}-2))`
-do
-    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
-    do
-        pop1="Jan22--Unfolded_${POP[i1]}"
-        pop2="Jan22--Unfolded_${POP[i2]}"
-        N_SITES=`realSFS print $pop1.saf.idx $pop2.saf.idx | wc -l`
-        echo -ne "${POP[i1]}\t${POP[i2]}\t$N_SITES\t"
-        if [[ $N_SITES == 0 ]]; then
-            echo "NA"
-        else
-            realSFS $pop1.saf.idx $pop2.saf.idx -fold 1 -P 40 > /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs
-            realSFS fst index $pop1.saf.idx $pop2.saf.idx -sfs /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs -fold 1 -P 40 -fstout /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22
-            realSFS fst stats /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -P 40
-        fi
-    done
-done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22_30pop--Fst.tsv
-# get the sfs step Trial
-cd /home/projects/dp_00007/data/hmon/angsd_Fst
-```
-# Trial dataset
-```
-POP=("AGAB" "NISS" "RYAN" "MOLU")
-
-for i1 in `seq 0 $((${#POP[@]}-2))`
-do
-    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
-    do
-        pop1="Jan22--Unfolded_${POP[i1]}"
-        pop2="Jan22--Unfolded_${POP[i2]}"
-        N_SITES=`realSFS print $pop1.saf.idx $pop2.saf.idx | wc -l`
-        echo -ne "${POP[i1]}\t${POP[i2]}\t$N_SITES\t"
-        if [[ $N_SITES == 0 ]]; then
-            echo "NA"
-        else
-            realSFS $pop1.saf.idx $pop2.saf.idx -fold 1 -P 40 > /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs
-            realSFS fst index $pop1.saf.idx $pop2.saf.idx -sfs /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs -fold 1 -P 40 -fstout /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22
-            realSFS fst stats /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -P 40
-        fi
-    done
-done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Fst.tsv
-```
-
-# sfs with a sliding window step
-POP=("ORIS" "CORS" "MOLU" "ZECE" "CRES" "PONT" "RIAE" "MORL" "USAM" "TOLL" "COLN" "BARR" "TRAL" "CLEW" "NELL" "RYAN" "GREV" "WADD" "FURI" "NISS" "LOGS" "VENO" "HALS" "THIS" "INNE" "HAUG" "HAFR" "AGAB" "OSTR" "VAGS" "LANG" "BUNN" "DOLV" "KALV" "HFJO" "RAMS" "ORNE" "HYPP")
-for i1 in `seq 0 $((${#POP[@]}-2))`
-do
-    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
-    do
-        pop1="${POP[i1]}"
-        pop2="${POP[i2]}"
-             realSFS fst stats2 /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -win 15000 -step 5000 | cut -f 2- | tail -n +2 | awk '{print $1"\t"$1":"$2"\t"$2-5000"\t"$2"\t"$3"\t"$4}' > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/slidingwindow/SlWin_${POP[i1]}.${POP[i2]}_Jan22_15K--Fst.tsv 
-    done
-done
 
 
-
-
-# Trial window sfs
-cd /home/projects/dp_00007/data/hmon/angsd_Fst
-POP=("AGAB" "NISS" "RYAN" "MOLU")
-for i1 in `seq 0 $((${#POP[@]}-2))`
-do
-    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
-    do
-        pop1="${POP[i1]}"
-        pop2="${POP[i2]}"
-             realSFS fst stats2 /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -win 15000 -step 5000 | cut -f 2- | tail -n +2 | awk '{print $1"\t"$1":"$2"\t"$2-5000"\t"$2"\t"$3"\t"$4}' > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/slidingwindow/SlWin_${POP[i1]}.${POP[i2]}_31Jan22_15K_trial4pop--Fst.tsv 
-    done
-done
 # for ORIS pop
 N_IND=`cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_ORIS-Fst.list | wc -l`
 REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome10scaffoldC3G.fasta
@@ -189,12 +117,6 @@ REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome
 
 /home/projects/dp_00007/apps/Scripts/wrapper_angsd.sh -debug 2 -nThreads 40 -ref $REF -anc $REF -bam /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_RYAN-Fst.list -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -minInd $((N_IND*2/3)) -GL 1 -doSaf 1 -out /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Unfolded_RYAN
 ```
-
-
-
-
-
-
 # NELL
 ```
 N_IND=`cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_NELL-Fst.list | wc -l`
@@ -341,3 +263,80 @@ REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome
 
 /home/projects/dp_00007/apps/Scripts/wrapper_angsd.sh -debug 2 -nThreads 40 -ref $REF -anc $REF -bam /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_HYPP-Fst.list -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -minInd $((N_IND*2/3)) -GL 1 -doSaf 1 -out /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Unfolded_HYPP
 ```
+
+
+# get the sfs step
+```
+cd /home/projects/dp_00007/data/hmon/angsd_Fst/
+POP=("ORIS" "CORS" "MOLU" "PONT" "MORL" "USAM"  "BARR" "TRAL" "CLEW" "NELL" "RYAN" "GREV" "WADD" "NISS" "LOGS" "HALS" "THIS" "INNE" "HAUG" "HAFR" "AGAB" "OSTR" "VAGS" "LANG" "BUNN" "DOLV" "KALV" "HFJO" "RAMS" "ORNE" "HYPP")
+
+for i1 in `seq 0 $((${#POP[@]}-2))`
+do
+    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
+    do
+        pop1="Jan22--Unfolded_${POP[i1]}"
+        pop2="Jan22--Unfolded_${POP[i2]}"
+        N_SITES=`realSFS print $pop1.saf.idx $pop2.saf.idx | wc -l`
+        echo -ne "${POP[i1]}\t${POP[i2]}\t$N_SITES\t"
+        if [[ $N_SITES == 0 ]]; then
+            echo "NA"
+        else
+            realSFS $pop1.saf.idx $pop2.saf.idx -fold 1 -P 40 > /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs
+            realSFS fst index $pop1.saf.idx $pop2.saf.idx -sfs /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs -fold 1 -P 40 -fstout /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22
+            realSFS fst stats /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -P 40
+        fi
+    done
+done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22_30pop--Fst.tsv
+# get the sfs step Trial
+cd /home/projects/dp_00007/data/hmon/angsd_Fst
+```
+# Trial dataset
+```
+POP=("AGAB" "NISS" "RYAN" "MOLU")
+
+for i1 in `seq 0 $((${#POP[@]}-2))`
+do
+    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
+    do
+        pop1="Jan22--Unfolded_${POP[i1]}"
+        pop2="Jan22--Unfolded_${POP[i2]}"
+        N_SITES=`realSFS print $pop1.saf.idx $pop2.saf.idx | wc -l`
+        echo -ne "${POP[i1]}\t${POP[i2]}\t$N_SITES\t"
+        if [[ $N_SITES == 0 ]]; then
+            echo "NA"
+        else
+            realSFS $pop1.saf.idx $pop2.saf.idx -fold 1 -P 40 > /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs
+            realSFS fst index $pop1.saf.idx $pop2.saf.idx -sfs /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.sfs -fold 1 -P 40 -fstout /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22
+            realSFS fst stats /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -P 40
+        fi
+    done
+done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/Jan22--Fst.tsv
+```
+
+# sfs with a sliding window step
+POP=("ORIS" "CORS" "MOLU" "ZECE" "CRES" "PONT" "RIAE" "MORL" "USAM" "TOLL" "COLN" "BARR" "TRAL" "CLEW" "NELL" "RYAN" "GREV" "WADD" "FURI" "NISS" "LOGS" "VENO" "HALS" "THIS" "INNE" "HAUG" "HAFR" "AGAB" "OSTR" "VAGS" "LANG" "BUNN" "DOLV" "KALV" "HFJO" "RAMS" "ORNE" "HYPP")
+for i1 in `seq 0 $((${#POP[@]}-2))`
+do
+    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
+    do
+        pop1="${POP[i1]}"
+        pop2="${POP[i2]}"
+             realSFS fst stats2 /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -win 15000 -step 5000 | cut -f 2- | tail -n +2 | awk '{print $1"\t"$1":"$2"\t"$2-5000"\t"$2"\t"$3"\t"$4}' > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/slidingwindow/SlWin_${POP[i1]}.${POP[i2]}_Jan22_15K--Fst.tsv 
+    done
+done
+
+
+
+
+# Trial window sfs
+cd /home/projects/dp_00007/data/hmon/angsd_Fst
+POP=("AGAB" "NISS" "RYAN" "MOLU")
+for i1 in `seq 0 $((${#POP[@]}-2))`
+do
+    for i2 in `seq $((i1+1)) $((${#POP[@]}-1))`
+    do
+        pop1="${POP[i1]}"
+        pop2="${POP[i2]}"
+             realSFS fst stats2 /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Jan22.fst.idx -win 15000 -step 5000 | cut -f 2- | tail -n +2 | awk '{print $1"\t"$1":"$2"\t"$2-5000"\t"$2"\t"$3"\t"$4}' > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/slidingwindow/SlWin_${POP[i1]}.${POP[i2]}_31Jan22_15K_trial4pop--Fst.tsv 
+    done
+done
