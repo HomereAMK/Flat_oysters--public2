@@ -50,7 +50,8 @@ REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome
 /home/projects/dp_00007/apps/Scripts/wrapper_angsd.sh -debug 2 -nThreads 40 -ref $REF -anc $REF -bam /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_NELL-Fst.list -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -minInd $((N_IND*2/3)) -GL 1 -doSaf 1 -sites /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.txt -out /home/projects/dp_00007/data/hmon/angsd_Fst/Feb22--Unfolded_list_NELL
 ```
 ```
-N_IND=cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_MOLU-Fst.list | wc -l REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome10scaffoldC3G.fasta
+N_IND=`cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_MOLU-Fst.list | wc -l`
+REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome10scaffoldC3G.fasta
 /home/projects/dp_00007/apps/Scripts/wrapper_angsd.sh -debug 2 -nThreads 40 -ref $REF -anc $REF -bam /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Jan22--AllSamples_MOLU-Fst.list -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -minInd $((N_IND*2/3)) -GL 1 -doSaf 1 -sites /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.txt -out /home/projects/dp_00007/data/hmon/angsd_Fst/Feb22--Unfolded_list_MOLU
 ```
 

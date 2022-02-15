@@ -21,8 +21,7 @@ module load htslib/1.11
 module load angsd/0.935
 
 # Load modules for PCAngsd
-module load anaconda2/4.4.0
-module load pcangsd/20190125
+module load anaconda3/2021.11
 
 #Load module for R
 module load gsl/2.6

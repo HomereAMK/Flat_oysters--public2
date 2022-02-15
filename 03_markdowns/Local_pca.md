@@ -51,11 +51,10 @@ module load pigz/2.3.4
 module load parallel/20210722
 module load angsd/0.935
 #pcangsd
-module load anaconda2/4.4.0
+module load anaconda3/2021.11
 #
 module load gsl/2.6
 module load perl/5.20.1
-module load samtools/1.10
 module load imagemagick/7.0.10-13
 module load gdal/2.2.3
 module load geos/3.8.0
@@ -70,7 +69,6 @@ module load proj/7.0.0
 module load gcc/10.2.0
 module load intel/perflibs/64/2020_update2
 module load R/4.0.0
-module load ngstools/20190624
 ```
 ```
 BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/Leona20dec21.beagle.gz
@@ -124,24 +122,24 @@ done
 ```
 # It will loop through all windowed beagle files in each LG
 # For each beagle file, it runs pcangsd first, and then runs an R script (/workdir/genomic-data-analysis/scripts/local_pca_2.R) to process the covariance matrix.  
+#For scaffold4
+BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/Leona20dec21.beagle.gz
 BEAGLEDIR=`echo $BEAGLE | sed 's:/[^/]*$::' | awk '$1=$1"/"'`
 PREFIX=`echo $BEAGLE | sed 's/\..*//' | sed -e 's#.*/\(\)#\1#'`
-LG=10
+LG=4 #change for other scaffold
 SNP=10000 ## Number of SNPs to include in each window
 PC=2 ## Number of PCs to keep for each window
-$PYTHON=python
-PCANGSD=/home/projects/dp_00007/people/hmon/AngsdPopStruct/pcangsd/pcangsd.py
+PCANGSD=/home/projects/dp_00007/apps/pcangsd/pcangsd.py
 LOCAL_PCA_2=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/local_pca_2.R
-
 ## Set maximum number of threads to 1
 export OMP_NUM_THREADS=1
-
 ## Loop through each windowed beagle file in the same linkage group (or chromosome)
-for INPUT in `ls "$BEAGLEDIR""$PREFIX"_"$LG".beagle.x*.gz`; do
+#for INPUT in `ls "$BEAGLEDIR""$PREFIX"_scaffold"$LG".beagle.x"*".gz`; do
+for INPUT in `ls "$BEAGLEDIR""$PREFIX"_scaffold"$LG".beagle.x*`; do
 	## Run pcangsd
 	python $PCANGSD -beagle $INPUT -o $INPUT -threads 1
 	## Process pcangsd output
-	Rscript --vanilla $LOCAL_PCA_2 $INPUT".cov" $PC $SNP $INPUT $LG $BEAGLEDIR"local_pca/"
+	Rscript --vanilla $LOCAL_PCA_2 $INPUT".cov" $PC $SNP $INPUT $LG /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I
 done
 
 ```
