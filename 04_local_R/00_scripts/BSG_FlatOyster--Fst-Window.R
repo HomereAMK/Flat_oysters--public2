@@ -165,7 +165,7 @@ Fst_Window2 <-
                      labels = c(".25", ".50", ".75"),
                      limits = c(0, 1),
                      expand = c(0.01, 0.01)) +
-  scale_colour_manual(values = c("#0b2631", "#310b26", "#26310b")) +
+  scale_colour_manual(values = c("#33691E", "#ACEBAE", "#ff9dff")) +
   theme(panel.background = element_rect(fill = "#ffffff"),
         panel.border = element_blank(),
         panel.grid.minor = element_blank(),
