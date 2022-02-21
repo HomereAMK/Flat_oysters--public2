@@ -50,10 +50,16 @@ done
 
 ## Run realSFS, site frequency spectrum.
 ```
-for query in MOLU ZECE CRES ORIS CORS PONT RIAE MORL USAM TOLL COLN BARR TRAL CLEW RYAN NELL GREV WADD FURI NISS LOGS VENO HALS THIS KALV HFJO RAMS ORNE HYPP LANG BUNN DOLV HAUG HAFR INNE VAGS AGAB OSTR
+for query in MOLU ZECE CRES ORIS CORS PONT RIAE MORL USAM TOLL COLN BARR TRAL CLEW RYAN 
 do
     realSFS -P 40 -fold 1 /home/projects/dp_00007/data/hmon/angsd_PopGen/Feb22--Unfolded_PopGen_${query}.saf.idx > /home/projects/dp_00007/data/hmon/angsd_PopGen/Feb22--Unfolded_PopGen_${query}.sfs
 done
+for query in NELL GREV WADD FURI NISS LOGS VENO HALS THIS KALV HFJO RAMS ORNE HYPP LANG BUNN DOLV HAUG HAFR INNE VAGS AGAB OSTR
+do
+    realSFS -P 40 -fold 1 /home/projects/dp_00007/data/hmon/angsd_PopGen/Feb22--Unfolded_PopGen_${query}.saf.idx > /home/projects/dp_00007/data/hmon/angsd_PopGen/Feb22--Unfolded_PopGen_${query}.sfs
+done
+
+
 ```
 $$$$$$$$$$$$$$$$$$$$$$$$$$
 ## Run saf2theta, calculate the thetas for each site.
