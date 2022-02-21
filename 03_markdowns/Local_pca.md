@@ -122,11 +122,11 @@ done
 ```
 # It will loop through all windowed beagle files in each LG
 # For each beagle file, it runs pcangsd first, and then runs an R script (/workdir/genomic-data-analysis/scripts/local_pca_2.R) to process the covariance matrix.  
-#For scaffold4
+#For scaffold10
 BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/Leona20dec21.beagle.gz
 BEAGLEDIR=`echo $BEAGLE | sed 's:/[^/]*$::' | awk '$1=$1"/"'`
 PREFIX=`echo $BEAGLE | sed 's/\..*//' | sed -e 's#.*/\(\)#\1#'`
-LG=4 #change for other scaffold
+LG=10 #change for other scaffold
 SNP=10000 ## Number of SNPs to include in each window
 PC=2 ## Number of PCs to keep for each window
 PCANGSD=/home/projects/dp_00007/apps/pcangsd/pcangsd.py
@@ -141,5 +141,17 @@ for INPUT in `ls "$BEAGLEDIR""$PREFIX"_scaffold"$LG".beagle.x*`; do
 	## Process pcangsd output
 	Rscript --vanilla $LOCAL_PCA_2 $INPUT".cov" $PC $SNP $INPUT $LG /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I
 done
-
 ```
+
+# Come up with a list of all beagle files
+ls /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/*beagle*.gz > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/DatasetI_beagle_list.txt
+
+## dist1
+for BEAGLE in `cat /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/DatasetI_trialbeagle_list_dist1_outlier.txt`; do
+ if [ ! -f /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Leona20dec21.beagle.dist1_outlier ] ; then
+    zcat $BEAGLE > /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Leona20dec21.beagle.dist1_outlier
+  else zcat $BEAGLE | tail -n +2 >>/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Leona20dec21.beagle.dist1_outlier
+  fi
+done
+gzip /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Leona20dec21.beagle.dist1_outlier
+## dist2

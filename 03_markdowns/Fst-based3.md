@@ -37,7 +37,6 @@ for i1 in `seq 0 $((${#POP[@]}-2))`
     done
 done
 ```
-$$$$$$$$$$$$$$$$$
 ## SNP-list Fst calculation
 ```
 cd /home/projects/dp_00007/data/hmon/angsd_Fst
@@ -61,6 +60,7 @@ do
     done
 done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/14Feb22_ALLpop_list--Fst.tsv
 ```
+$$$$$$$$$$$$$$$$$
 
 ## SNP-list Fst sliding window 15kb and 15kb step
 ```
