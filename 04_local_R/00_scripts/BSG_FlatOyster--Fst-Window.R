@@ -54,8 +54,8 @@ Fst_Window_ColumnNames <- colnames(LANG_MOLU)
 
 
 # Merges DFs ~
-fulldf0 <- full_join(LANG_MOLU, LANG_NELL,  by = Fst_Window_ColumnNames)
-fulldf <- full_join(fulldf0, LANG_NISS, by = Fst_Window_ColumnNames)
+fulldf0 <- full_join(NISS_NELL, LANG_NELL,  by = Fst_Window_ColumnNames)
+fulldf <- full_join(fulldf0, NELL_MOLU, by = Fst_Window_ColumnNames)
 #fulldf <- full_join(fulldf, LANG_OSTR, by = Fst_Window_ColumnNames)
 #fulldf <- full_join(fulldf, OSTR_MOLU, by = Fst_Window_ColumnNames)
 #fulldf <- full_join(fulldf, OSTR_NELL, by = Fst_Window_ColumnNames)
@@ -108,7 +108,7 @@ Fst_Window <-
                      labels = c(".25", ".50", ".75"),
                      limits = c(0, 1),
                      expand = c(0.01, 0.01)) +
-  scale_colour_manual(values = c("#240377", "#FDD49E",  "#D38C89")) +
+  scale_colour_manual(values = c("#083359", "#BF820F",  "#1BBC9B")) +
   theme(panel.background = element_rect(fill = "#ffffff"),
         panel.border = element_blank(),
         panel.grid.minor = element_blank(),
@@ -130,7 +130,7 @@ Fst_Window <-
 
 
 # Saves Manhattan plot ~
-ggsave(Fst_Window, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/FST/SLWin_15K_Feb22list--Fst-Windows--LANGvsNISS_NELL_MOLU_resize.pdf", device = cairo_pdf, scale = 1, width = 26, height = 20, dpi = 600)
+ggsave(Fst_Window, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/FST/SLWin_15K_Feb22list--Fst-Windows--NISS_NELl.LANG_NELL.NELL_MOLU_resize.pdf", device = cairo_pdf, scale = 1, width = 26, height = 20, dpi = 600)
 dev.off()
 
 
