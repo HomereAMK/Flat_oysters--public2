@@ -72,7 +72,7 @@ do
     do
         pop1="${POP[i1]}"
         pop2="${POP[i2]}"
-             realSFS fst stats2 /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Feb22_List.fst.idx -win 15000 -step 15000 | cut -f 2- | tail -n +2 | awk '{print $1"\t"$1":"$2"\t"$2-15000"\t"$2"\t"$3"\t"$4}' > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/slidingwindow/SLWin15kb_15kbstep_14Feb22_LIST_${POP[i1]}.${POP[i2]}--ALLpop_Fst.tsv 
+             realSFS fst stats2 /home/projects/dp_00007/data/hmon/angsd_Fst/${POP[i1]}.${POP[i2]}_Feb22_List.fst.idx -win 20000 -step 15000 | cut -f 2- | tail -n +2 | awk '{print $1"\t"$1":"$2"\t"$2-20000"\t"$2"\t"$3"\t"$4}' > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/slidingwindow/SLWin20kb_20kbstep_14Feb22_LIST_${POP[i1]}.${POP[i2]}--ALLpop_Fst.tsv 
     done
 done
 ```
