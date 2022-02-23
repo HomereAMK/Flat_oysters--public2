@@ -1,3 +1,18 @@
+#!/bin/bash
+#PBS -d /home/projects/dp_00007/people/hmon/Flat_oysters
+#PBS -W group_list=dp_00007 -A dp_00007
+#PBS -N Cass0.25VariantCalling
+#PBS -e Cass0.25VariantCalling.err
+#PBS -o Cass0.25VariantCalling.out
+#PBS -l nodes=2:ppn=36:fatnode
+#PBS -l walltime=600:00:00
+#PBS -l mem=1300gb
+#PBS -m n
+#PBS -r n
+
+
+
+
 # Load module angsd
 module load tools ngs computerome_utils/2.0
 module load htslib/1.9

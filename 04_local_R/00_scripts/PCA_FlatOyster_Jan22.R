@@ -24,6 +24,13 @@ annot <- read.table("Data/PCA/Bam_list_13dec21.annot", sep = "\t", header = FALS
 MissingData <- read.table("Data/PCA/Leona20dec21_SNPs_11jan22.GL-MissingData.txt", sep = "\t", header = FALSE)
 colnames(MissingData) <- c("Sample_ID", "NumberMissing", "PercentageMissing")
 
+MissingData %>% 
+    mutate(PercentageMissing> 60) %>% 
+    summarise()
+
+sum((MissingData$PercentageMissing > 60))
+sum((MissingData$PercentageMissing > 70))
+sum((MissingData$PercentageMissing > 80))
 
 # Runs PCA ~
 PCA <- eigen(data)
