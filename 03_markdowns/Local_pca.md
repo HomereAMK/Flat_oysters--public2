@@ -73,7 +73,7 @@ module load R/4.0.0
 ```
 BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/Leona20dec21.beagle.gz
 LGLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/lg_list.txt
-SNP=10000 ## Number of SNPs to include in each window
+SNP=1000 ## Number of SNPs to include in each window
 PC=2 ## Number of PCs to keep for each window
 N_CORE_MAX=10 # Maximum number of threads to use simulatenously
 PREFIX=`echo $BEAGLE | sed 's/\..*//' | sed -e 's#.*/\(\)#\1#'`
@@ -122,12 +122,12 @@ done
 ```
 # It will loop through all windowed beagle files in each LG
 # For each beagle file, it runs pcangsd first, and then runs an R script (/workdir/genomic-data-analysis/scripts/local_pca_2.R) to process the covariance matrix.  
-#For scaffold10
+#For scaffold1  #rerun that no loop
 BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/Leona20dec21.beagle.gz
 BEAGLEDIR=`echo $BEAGLE | sed 's:/[^/]*$::' | awk '$1=$1"/"'`
 PREFIX=`echo $BEAGLE | sed 's/\..*//' | sed -e 's#.*/\(\)#\1#'`
-LG=10 #change for other scaffold
-SNP=10000 ## Number of SNPs to include in each window
+LG=1 #change for other scaffold
+SNP=1000 ## Number of SNPs to include in each window
 PC=2 ## Number of PCs to keep for each window
 PCANGSD=/home/projects/dp_00007/apps/pcangsd/pcangsd.py
 LOCAL_PCA_2=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/local_pca_2.R
@@ -143,10 +143,54 @@ for INPUT in `ls "$BEAGLEDIR""$PREFIX"_scaffold"$LG".beagle.x*`; do
 done
 ```
 
-# Come up with a list of all beagle files
-ls /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/*beagle*.gz > /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/DatasetI_beagle_list.txt
+# Inversion PCA
+```
+cd /home/projects/dp_00007/people/hmon/Flat_oysters
+#inversion scaffold8
+grep 'scaffold8' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.txt > /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold8.txt
+awk '$2 >= 40000000 && $2 <= 60000000' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold8.txt >> 05_inversions/scaffold8_inv/scaffold8_inversion_snps.txt
 
+#inversion scaffold4
+grep 'scaffold4' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.txt > /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold4.txt
+awk '$2 >= 0 && $2 <= 13000000' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold4.txt >> 05_inversions/scaffold4_inv/scaffold4_inversion_snps.txt
+
+#inversion scaffold5
+grep 'scaffold5' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.txt > /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold5.txt
+awk '$2 >= 0 && $2 <= 25000000' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold5.txt >> 05_inversions/scaffold5_inv/scaffold5_inversion_snps.txt
+
+# Load module angsd
+module load tools ngs computerome_utils/2.0
+module load htslib/1.9
+module load bedtools/2.30.0
+module load pigz/2.3.4
+module load parallel/20210722
+module load angsd/0.931
+
+#var
+for query in scaffold8 scaffold4 scaffold5
+do
+	REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome10scaffoldC3G.fasta
+	BAMLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_21feb22
+	OUTPUTDIR=/home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions/${query}_inv
+	N_IND=`cat /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_21feb22 | wc -l`
+	#script
+	cd /home/projects/dp_00007/people/hmon/Flat_oysters
+	angsd \
+	-b $BAMLIST -ref $REF -out  $OUTPUTDIR/${query}_inv \
+	-remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -setMaxDepth 1000 -MinMaf 0.015 -SNP_pval 1e-6 -postCutoff 0.95  \
+	-GL 2 -doMajorMinor 4 -doMaf 1 -doCounts 1 -doGlf 2 -doPost 2 -doGeno 2 -dumpCounts 2 -doHaploCall 1 -doIBS 1 -doDepth 1 \
+	-doCov 1 -makeMatrix 1 -P 12 -sites /home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions/${query}_inv/${query}_inversion_snps.txt
+done
+```
+
+
+
+# Come up with a list of all beagle files
+```
+ls /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/*beagle*.gz > /home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions/DatasetI_beagle_list.txt
+```
 ## dist1
+```
 for BEAGLE in `cat /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/DatasetI_trialbeagle_list_dist1_outlier.txt`; do
  if [ ! -f /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Leona20dec21.beagle.dist1_outlier ] ; then
     zcat $BEAGLE > /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Leona20dec21.beagle.dist1_outlier
@@ -154,4 +198,7 @@ for BEAGLE in `cat /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dat
   fi
 done
 gzip /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Leona20dec21.beagle.dist1_outlier
+```
+
 ## dist2
+
