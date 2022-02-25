@@ -148,27 +148,21 @@ done
 cd /home/projects/dp_00007/people/hmon/Flat_oysters
 #inversion scaffold8
 grep 'scaffold8' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.txt > /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold8.txt
-awk '$2 >= 40000000 && $2 <= 60000000' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold8.txt >> 05_inversions/scaffold8_inv/scaffold8_inversion_snps.txt
+awk '$2 >= 40000000 && $2 <= 60000000' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold8.txt >> 05_inversions/scaffold8_inv/scaffold8_inversion_snps.txt  #261546 snps
 
 #inversion scaffold4
 grep 'scaffold4' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.txt > /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold4.txt
-awk '$2 >= 0 && $2 <= 13000000' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold4.txt >> 05_inversions/scaffold4_inv/scaffold4_inversion_snps.txt
+awk '$2 >= 0 && $2 <= 13000000' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold4.txt >> 05_inversions/scaffold4_inv/scaffold4_inversion_snps.txt #167761 snps
 
 #inversion scaffold5
 grep 'scaffold5' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.txt > /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold5.txt
-awk '$2 >= 0 && $2 <= 25000000' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold5.txt >> 05_inversions/scaffold5_inv/scaffold5_inversion_snps.txt
+awk '$2 >= 0 && $2 <= 25000000' /home/projects/dp_00007/people/hmon/Flat_oysters/global_snp_list_Leona20dec21.scaffold5.txt >> 05_inversions/scaffold5_inv/scaffold5_inversion_snps.txt #347667
 
-# Load module angsd
-module load tools ngs computerome_utils/2.0
-module load htslib/1.9
-module load bedtools/2.30.0
-module load pigz/2.3.4
-module load parallel/20210722
-module load angsd/0.931
 
 #var
 for query in scaffold8 scaffold4 scaffold5
 do
+angsd sites index /home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions/${query}_inv/${query}_inversion_snps.txt
 	REF=/home/projects/dp_00007/people/hmon/AngsdPopStruct/01_infofiles/fileOegenome10scaffoldC3G.fasta
 	BAMLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_21feb22
 	OUTPUTDIR=/home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions/${query}_inv
