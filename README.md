@@ -1,5 +1,5 @@
 # Flat_oysters
-lcWGS pipeline analysis of Flat oysters (<i>Ostrea edulis</i>) post data-processing
+lcWGS pipeline analysis of :oyster: Flat oysters  (<i>Ostrea edulis</i>) :oyster: post data-processing
 
 # Flat oyster populations throughout its distribution range
 ### Mitochondrial analysis
