@@ -1,3 +1,8 @@
+## Data wrangling 
+#mv file by date of creation
+cd LocalPCA/Dataset_I
+for i in `ls -lrt 1000snpsWin/ | grep "Feb 18" `; do mv $i* 10000snpsWin/; done
+
 ## Subset the beagle file: subset_beagle_by_lg.sh
 ```
 # This script is used to subset a genome-wide beagle file into smaller files by linkage groups or chromosomes. 
