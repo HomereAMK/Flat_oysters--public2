@@ -119,7 +119,7 @@ done
 
 for query in MOLU ZECE CRES ORIS CORS PONT RIAE MORL USAM TOLL COLN BARR TRAL CLEW RYAN NELL GREV WADD FURI NISS LOGS VENO HALS THIS KALV HFJO RAMS ORNE HYPP LANG BUNN DOLV HAUG HAFR INNE VAGS AGAB OSTR
 do
-    cut -f 2,3,4,5,9,14 /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdPopGen/Dataset_I/window/Feb22--Unfolded_PopGen_${query}_PopGenEstimates-Windows15kb-Steps15kb.pestPG | tail -n +2 | sed -r 's/LG//g' | sed 's/^0*//' | awk '$6 > 0' | awk '{print $1"\t"$1":"$2"\t"$2-20000"\t"$2"\t"$6"\t"$3"\t"$3/$6"\t"$4"\t"$4/$6"\t"$5}' | awk 'BEGIN{print "CHR\tSNP\tgPoint\tWindow\tNumberOfSites\tsumTw\tTw\tsumTp\tTp\tTd"}1' > 
+    cut -f 2,3,4,5,9,14 /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdPopGen/Dataset_I/window/Feb22--Unfolded_PopGen_${query}_PopGenEstimates-Windows15kb-Steps15kb.pestPG | tail -n +2 | sed -r 's/LG//g' | sed 's/^0*//' | awk '$6 > 0' | awk '{print $1"\t"$1":"$2"\t"$2-15000"\t"$2"\t"$6"\t"$3"\t"$3/$6"\t"$4"\t"$4/$6"\t"$5}' | awk 'BEGIN{print "CHR\tSNP\tgPoint\tWindow\tNumberOfSites\tsumTw\tTw\tsumTp\tTp\tTd"}1' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdPopGen/Dataset_I/window/Feb22--Unfolded_PopGen_${query}_PopGenEstimates-Windows15kb-Steps15kb.tsv
 
 done
 
