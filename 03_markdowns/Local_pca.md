@@ -1,13 +1,13 @@
 ## Data wrangling 
 #mv file by date of creation
 cd LocalPCA/Dataset_I
-for i in `ls -lrt 1000snpsWin/ | grep "Feb 18" `; do mv $i* 10000snpsWin/; done
 
 ## Subset the beagle file: subset_beagle_by_lg.sh
 ```
 # This script is used to subset a genome-wide beagle file into smaller files by linkage groups or chromosomes. 
-scp /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/
-BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/Leona20dec21.beagle.gz
+#scp /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/1000snpsWin/
+#scp /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/1000snpsWin/
+BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/1000snpsWin/Leona20dec21.beagle.gz  #for 1000snpsWindow
 LGLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/lg_list.txt
 N_CORE_MAX=30 # Maximum number of threads to use simulatenously
 
@@ -76,7 +76,7 @@ module load intel/perflibs/64/2020_update2
 module load R/4.0.0
 ```
 ```
-BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/Leona20dec21.beagle.gz
+BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/1000snpsWin/Leona20dec21.beagle.gz  #for 1000snpsWindow
 LGLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/lg_list.txt
 SNP=1000 ## Number of SNPs to include in each window
 PC=2 ## Number of PCs to keep for each window
