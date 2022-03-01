@@ -7,9 +7,9 @@ cd LocalPCA/Dataset_I
 # This script is used to subset a genome-wide beagle file into smaller files by linkage groups or chromosomes. 
 #scp /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/1000snpsWin/
 #scp /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdOutput/Dataset_I/Leona20dec21.beagle.gz /home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/1000snpsWin/
-BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/1000snpsWin/Leona20dec21.beagle.gz  #for 1000snpsWindow
+BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/tmp/Leona20dec21.beagle.gz 
 LGLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/lg_list.txt
-N_CORE_MAX=30 # Maximum number of threads to use simulatenously
+N_CORE_MAX=3000 # Maximum number of threads to use simulatenously
 
 PREFIX=`echo $BEAGLE | sed 's/\..*//' | sed -e 's#.*/\(\)#\1#'`
 BEAGLEDIR=`echo $BEAGLE | sed 's:/[^/]*$::' | awk '$1=$1"/"'`
@@ -50,7 +50,7 @@ done
 ```
 # Load module angsd
 module load tools computerome_utils/2.0
-module load htslib/1.13
+module load htslib/1.15
 module load bedtools/2.30.0
 module load pigz/2.3.4
 module load parallel/20210722
@@ -76,11 +76,11 @@ module load intel/perflibs/64/2020_update2
 module load R/4.0.0
 ```
 ```
-BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/LocalPCA/Dataset_I/1000snpsWin/Leona20dec21.beagle.gz  #for 1000snpsWindow
+BEAGLE=/home/projects/dp_00007/people/hmon/Flat_oysters/tmp/Leona20dec21.beagle.gz  #for 1000snpsWindow
 LGLIST=/home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/lg_list.txt
 SNP=1000 ## Number of SNPs to include in each window
 PC=2 ## Number of PCs to keep for each window
-N_CORE_MAX=10 # Maximum number of threads to use simulatenously
+N_CORE_MAX=30 # Maximum number of threads to use simulatenously
 PREFIX=`echo $BEAGLE | sed 's/\..*//' | sed -e 's#.*/\(\)#\1#'`
 BEAGLEDIR=`echo $BEAGLE | sed 's:/[^/]*$::' | awk '$1=$1"/"'`
 ```
@@ -175,7 +175,7 @@ angsd sites index /home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions
 	#script
 	cd /home/projects/dp_00007/people/hmon/Flat_oysters
 	angsd \
-	-b $BAMLIST -ref $REF -out  $OUTPUTDIR/${query}_inv \
+	-b $BAMLIST -ref $REF -out  $OUTPUTDIR/batch3_${query}_inv -r${query}: \
 	-remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -setMaxDepth 1000 -MinMaf 0.015 -SNP_pval 1e-6 -postCutoff 0.95  \
 	-GL 2 -doMajorMinor 4 -doMaf 1 -doCounts 1 -doGlf 2 -doPost 2 -doGeno 2 -dumpCounts 2 -doHaploCall 1 -doIBS 1 -doDepth 1 \
 	-doCov 1 -makeMatrix 1 -P 12 -sites /home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions/${query}_inv/${query}_inversion_snps.txt

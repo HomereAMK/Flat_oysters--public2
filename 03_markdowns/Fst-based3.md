@@ -62,7 +62,7 @@ done > /home/projects/dp_00007/people/hmon/Flat_oysters/Fst/14Feb22_ALLpop_list-
 ```
 $$$$$$$$$$$$$$$$$
 
-## SNP-list Fst sliding window 15kb and 15kb step
+## SNP-list Fst sliding window 20kb and 20kb step
 ```
 cd /home/projects/dp_00007/data/hmon/angsd_Fst
 POP=("ORIS" "CORS" "MOLU" "ZECE" "CRES" "PONT" "RIAE" "MORL" "USAM" "TOLL" "COLN" "BARR" "TRAL" "CLEW" "NELL" "RYAN" "GREV" "WADD" "FURI" "NISS" "LOGS" "VENO" "HALS" "THIS" "INNE" "HAUG" "HAFR" "AGAB" "OSTR" "VAGS" "LANG" "BUNN" "DOLV" "KALV" "HFJO" "RAMS" "ORNE" "HYPP")

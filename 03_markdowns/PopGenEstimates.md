@@ -156,7 +156,7 @@ angsd sites index /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdPopGe
 ```
 # Runs _ANGSD_ under -doSaf::
 ```
-parallel --plus angsd -i {} -ref $REF -anc $REF -sites /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdPopGen/heterozygosity/GEO_FlatOysters--AllSamples_0.25_SITES_bed.pos -GL 1 -doSaf 1 -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 30 -minQ 20 -out /home/projects/dp_00007/data/hmon/angsd_Het{/...} :::: /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_21feb22
+parallel --plus angsd -i {} -ref $REF -anc $REF -sites /home/projects/dp_00007/people/hmon/Flat_oysters/02_angsdPopGen/heterozygosity/GEO_FlatOysters--AllSamples_0.25_SITES_bed.pos -GL 1 -doSaf 1 -remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 30 -minQ 20 -out /home/projects/dp_00007/data/hmon/angsd_Het/{/...} :::: /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_21feb22
 ```
 # Calculates fractions:
 ```
