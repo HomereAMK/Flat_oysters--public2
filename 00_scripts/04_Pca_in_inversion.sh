@@ -31,8 +31,16 @@ angsd sites index /home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions
 	#script
 	cd /home/projects/dp_00007/people/hmon/Flat_oysters
 	angsd \
-	-b $BAMLIST -ref $REF -out  $OUTPUTDIR/batch3_${query}_inv -r ${query}: \
+	-b $BAMLIST -ref $REF -out $OUTPUTDIR/batch8_${query}_inv -rf /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/${query}.txt \
 	-remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -setMaxDepth 1000 -MinMaf 0.015 -SNP_pval 1e-6 -postCutoff 0.95  \
 	-GL 2 -doMajorMinor 4 -doMaf 1 -doCounts 1 -doGlf 2 -doPost 2 -doGeno 2 -dumpCounts 2 -doHaploCall 1 -doIBS 1 -doDepth 1 \
 	-doCov 1 -makeMatrix 1 -P 12 -sites /home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions/${query}_inv/${query}_inversion_snps.txt
 done
+
+
+
+#angsd \
+#	-b $BAMLIST -ref $REF -out  /home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions/scaffold8_inv/batch6_scaffold8_inv -rf /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/scaffold8.txt \
+#	-remove_bads 1 -uniqueOnly 1 -baq 1 -C 50 -minMapQ 20 -minQ 20 -setMaxDepth 1000 -MinMaf 0.015 -SNP_pval 1e-6 -postCutoff 0.95  \
+#	-GL 2 -doMajorMinor 4 -doMaf 1 -doCounts 1 -doGlf 2 -doPost 2 -doGeno 2 -dumpCounts 2 -doHaploCall 1 -doIBS 1 \
+#	-doCov 1 -makeMatrix 1 -P 30 -sites /home/projects/dp_00007/people/hmon/Flat_oysters/05_inversions/scaffold8_inv/scaffold8_inversion_snps.txt

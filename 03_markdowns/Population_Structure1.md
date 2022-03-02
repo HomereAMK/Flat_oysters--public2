@@ -137,7 +137,8 @@ zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/L
 ```
 N_SITES=`zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | wc -l`
 
-zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_13dec21.labels - | awk -v N_INDawk="$N_IND" '{print $1"\t"$3"\t"$3*100/N_INDawk}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.GL-MissingData.txt
+N_SITES=`zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | wc -l`
+zcat /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.beagle.gz | tail -n +2 | perl /home/projects/dp_00007/apps/Scripts/call_geno.pl --skip 3 | cut -f 4- | awk '{ for(i=1;i<=NF; i++){ if($i==-1)x[i]++} } END{ for(i=1;i<=NF; i++) print i"\t"x[i] }' | paste /home/projects/dp_00007/people/hmon/Flat_oysters/01_infofiles/Bam_list_21feb22.labels - | awk -v N_SITESawk="$N_SITES" '{print $1"\t"$3"\t"$3*100/N_SITESawk}' > /home/projects/dp_00007/people/hmon/Flat_oysters/02_ngsLDOutput/Dataset_I/Leona20dec21_SNPs_11jan22.GL-MissingData.txt
 ``` 
 
 ## Reduce the % of Missing Data
@@ -177,7 +178,7 @@ END {
 >-e is the population to exclude.
 
 We will try to get the number of SNPs for .25 .50 .66 of missing data percentage.
->For the Pruned dataset
+>For the UNPruned dataset
 | ">25% Missing data"  | ">50% Missing data" |">66% Missing data" |
 | ------------- | ------------- |------------- |
 | SNPs  | SNPs  | SNPs  |

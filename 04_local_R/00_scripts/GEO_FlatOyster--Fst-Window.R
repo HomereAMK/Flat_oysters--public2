@@ -5,14 +5,14 @@
 
 # Cleans the environment ~ 
 rm(list=ls())
-setwd("~/Desktop/Scripts/Data/FST")
+setwd("~/Desktop/Scripts/Data/FST/")
 
 
 # Loads required packages ~
 pacman::p_load(tidyverse, extrafont, lemon)
 
 
-# Loads datasets ~
+###### Loads datasets #####
 LANG_MOLU <- read.table("SLWin_15K_Feb22list.fst.idx_LANG.MOLU__Feb22listFst_15K_trial5pop--Fst.tsv", header = FALSE)
 LANG_NELL <- read.table("SLWin_15K_Feb22list.fst.idx_LANG.NELL__Feb22listFst_15K_trial5pop--Fst.tsv", header = FALSE)
 LANG_NISS <- read.table("SLWin_15K_Feb22list.fst.idx_NISS.LANG__Feb22listFst_15K_trial5pop--Fst.tsv", header = FALSE)
@@ -23,30 +23,19 @@ OSTR_NISS <- read.table("SLWin_15K_Feb22list.fst.idx_OSTR.NISS__Feb22listFst_15K
 NISS_MOLU <- read.table("SLWin_15K_Feb22list.fst.idx_NISS.MOLU__Feb22listFst_15K_trial5pop--Fst.tsv", header = FALSE)
 NISS_NELL <- read.table("SLWin_15K_Feb22list.fst.idx_NISS.NELL__Feb22listFst_15K_trial5pop--Fst.tsv", header = FALSE)
 NELL_MOLU <- read.table("SLWin_15K_Feb22list.fst.idx_NISS.MOLU__Feb22listFst_15K_trial5pop--Fst.tsv", header = FALSE)
-# Adds column names to MissingData ~
-colnames(LANG_MOLU) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
-colnames(LANG_NELL) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
-colnames(LANG_NISS) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
-colnames(LANG_OSTR) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
-colnames(OSTR_MOLU) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
-colnames(OSTR_NELL) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
-colnames(OSTR_NISS) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
-colnames(NISS_MOLU) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
-colnames(NISS_NELL) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
-colnames(NELL_MOLU) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+
 
 
 # Adds Pops column to each DF ~
-LANG_MOLU$Pops <- factor(paste("Langesand_Sørlandsleia Vs Molunat"))
-LANG_NELL$Pops <- factor(paste("Langesand_Sørlandsleia Vs Loch_Nell"))
-LANG_NISS$Pops <- factor(paste("Langesand_Sørlandsleia Vs Nissum"))
-LANG_OSTR$Pops <- factor(paste("Langesand_Sørlandsleia Vs Ostrevigtjønn_Hauge_I_Dalane"))
-OSTR_MOLU$Pops <- factor(paste("Ostrevigtjønn_Hauge_I_Dalane Vs Molunat"))
-OSTR_NELL$Pops <- factor(paste("Ostrevigtjønn_Hauge_I_Dalane Vs Loch_Nell"))
-OSTR_NISS$Pops <- factor(paste("Ostrevigtjønn_Hauge_I_Dalane Vs Nissum"))
-NISS_MOLU$Pops <- factor(paste("Nissum Vs Molunat"))
-NISS_NELL$Pops <- factor(paste("Nissum Vs Loch_Nell"))
-NELL_MOLU$Pops <- factor(paste("Loch_Nell Vs Molunat"))
+COLN_NISSK$Pops <- factor(paste("River Colne Vs Nissum"))
+GREV_NISS$Pops <- factor(paste("Lake Grevelingen Vs Nissum"))
+USAM_NISS$Pops <- factor(paste("State of Maine Vs Nissum"))
+CORS_NISSK$Pops <- factor(paste("Corsica Vs Nissum"))
+NISS_LANG$Pops <- factor(paste("Nissum Vs Langesand_Sørlandsleia"))
+NISS_OSTR$Pops <- factor(paste("Nissum Vs Ostrevigtjønn_Hauge_I_Dalane"))
+RYAN_NISS$Pops <- factor(paste("Loch_Ryan Vs Nissum"))
+NISS_USAM$Pops <- factor(paste("Nissum Vs Molunat"))
+NELL_NISS$Pops <- factor(paste("Nissum Vs Loch_Nell"))
 
 
 # Gets column names ~
@@ -188,6 +177,108 @@ Fst_Window2 <-
 # Saves Manhattan plot ~
 ggsave(Fst_Window2, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/FST/SLWin_15K_Feb22list--Fst-Windows--NISS_OSTR_LANGresize.pdf", device = cairo_pdf, scale = 1, width = 26, height = 20, dpi = 600)
 dev.off()
+
+######### 28feb ########
+# Cleans the environment ~ 
+rm(list=ls())
+setwd("~/Desktop/Scripts/Data/FST/20K_window/")
+
+COLN_NISS_20K <- read.table("SLWin20kb_20kbstep_14Feb22_LIST_COLN.NISS--ALLpop_Fst.tsv", header = FALSE)
+GREV_NISS_20K <- read.table("SLWin20kb_20kbstep_14Feb22_LIST_GREV.NISS--ALLpop_Fst.tsv", header = FALSE)
+USAM_NISS_20K <- read.table("SLWin20kb_20kbstep_14Feb22_LIST_USAM.NISS--ALLpop_Fst.tsv", header = FALSE)
+CORS_NISS_20K <- read.table("SLWin20kb_20kbstep_14Feb22_LIST_CORS.NISS--ALLpop_Fst.tsv", header = FALSE)
+NISS_LANG_20K <- read.table("SLWin20kb_20kbstep_14Feb22_LIST_NISS.LANG--ALLpop_Fst.tsv", header = FALSE)
+NISS_OSTR_20K <- read.table("SLWin20kb_20kbstep_14Feb22_LIST_NISS.OSTR--ALLpop_Fst.tsv", header = FALSE)
+NISS_USAM_20K <- read.table("SLWin20kb_20kbstep_14Feb22_LIST_USAM.NISS--ALLpop_Fst.tsv", header = FALSE)
+RYAN_NISS_20K <- read.table("SLWin20kb_20kbstep_14Feb22_LIST_RYAN.NISS--ALLpop_Fst.tsv", header = FALSE)
+NELL_NISS_20K <- read.table("SLWin20kb_20kbstep_14Feb22_LIST_NELL.NISS--ALLpop_Fst.tsv", header = FALSE)
+ <- read.table("", header = FALSE)
+
+
+# Adds column names to MissingData ~
+colnames(COLN_NISS_20K) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+colnames(GREV_NISS_20K) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+colnames(USAM_NISS_20K) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+colnames(CORS_NISS_20K) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+colnames(NISS_LANG_20K) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+colnames(NISS_OSTR_20K) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+colnames(NISS_USAM_20K) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+colnames(RYAN_NISS_20K) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+colnames(NELL_NISS_20K) <- c("CHR", "SNP", "gPoint", "END", "NumberOfSites", "Fst")
+
+
+# Adds Pops column to each DF ~
+COLN_NISS_20K$Pops <- factor(paste("River Colne Vs Nissum"))
+GREV_NISS_20K$Pops <- factor(paste("Lake Grevelingen Vs Nissum"))
+USAM_NISS_20K$Pops <- factor(paste("State of Maine Vs Nissum"))
+CORS_NISS_20K$Pops <- factor(paste("Corsica Vs Nissum"))
+NISS_LANG_20K$Pops <- factor(paste("Nissum Vs Langesand_Sørlandsleia"))
+NISS_OSTR_20K$Pops <- factor(paste("Nissum Vs Ostrevigtjønn_Hauge_I_Dalane"))
+RYAN_NISS_20K$Pops <- factor(paste("Loch_Ryan Vs Nissum"))
+NISS_USAM_20K$Pops <- factor(paste("Nissum Vs State of Maine"))
+NELL_NISS_20K$Pops <- factor(paste("Nissum Vs Loch_Nell"))
+
+# Gets column names ~
+Fst_Window_ColumnNames <- colnames(NELL_NISS_20K)
+#Choose the Fst Pairwise comp
+fulldf0 <- full_join(NISS_LANG_20K, NISS_OSTR_20K,  by = Fst_Window_ColumnNames)
+#fulldf <- full_join(fulldf0, LANG_OSTR, by = Fst_Window_ColumnNames)
+
+
+fulldf0$CHR <- factor(fulldf0$CHR, ordered = T,
+                     levels = c("scaffold1",
+                                "scaffold2",
+                                "scaffold3",
+                                "scaffold4",
+                                "scaffold5",
+                                "scaffold6",
+                                "scaffold7",
+                                "scaffold8",
+                                "scaffold9",
+                                "scaffold10"))
+
+y_strip_labels <- c("scaffold1" = "CHR 01", "scaffold2" = "CHR 02", "scaffold3" = "CHR 03", "scaffold4" = "CHR 04",
+                    "scaffold5" = "CHR 05", "scaffold6" = "CHR 06", "scaffold7" = "CHR 07", "scaffold8" = "CHR 08",
+                    "scaffold9" = "CHR 09", "scaffold10" = "CHR 10")
+
+
+NissVsLangOstr <-
+  ggplot() +
+  geom_line(data = fulldf0, aes(x = gPoint, y = Fst, colour = Pops), linetype = 1, size = .2) +
+  facet_rep_grid(CHR ~. , scales = "free", labeller = labeller(CHR = y_strip_labels)) +
+  scale_x_continuous("Genomic Position",
+                     breaks = c( 15000000, 30000000, 40000000, 50000000, 60000000, 70000000, 80000000, 90000000, 100000000, 110000000, 115000000), 
+                     labels = c( "15Mb", "30Mb", "40Mb", "50Mb", "60Mb", "70Mb", "80Mb","90Mb","100Mb", "110Mb", "115Mb"),
+                     limits = c(0,115000000 ),
+                     expand = c(0.01, 0.01)) +
+  scale_y_continuous("Fst Across Chromosomes",
+                     breaks = c(.25, .5, .75), 
+                     labels = c(".25", ".50", ".75"),
+                     limits = c(0, 1),
+                     expand = c(0.01, 0.01)) +
+  scale_colour_manual(values = c("#011526","#1BBC9B")) +
+  theme(panel.background = element_rect(fill = "#ffffff"),
+        panel.border = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(colour = "#000000", size = .3),
+        axis.title.x = element_text(size = 12, face = "bold", color = "#000000", margin = margin(t = 30, r = 0, b = 0, l = 0)),
+        axis.title.y = element_text(size = 12, face = "bold", color = "#000000", margin = margin(t = 0, r = 30, b = 0, l = 0)),
+        axis.text = element_text(colour = "#000000", size = 10),
+        axis.ticks = element_line(color = "#000000", size = .3),
+        strip.background.y = element_rect(colour = "#000000", fill = "#d6d6d6", size = 0.3),
+        strip.text = element_text(colour = "#000000", size = 10, face = "bold"),
+        legend.position = "top",
+        legend.margin = margin(t = 0, b = 0, r = 0, l = 0),
+        legend.box.margin = margin(t = 30, b = 25, r = 0, l = 0),
+        legend.key = element_rect(fill = NA),
+        legend.background =element_blank()) +
+  guides(colour = guide_legend(title = "Fst Comparisons:", title.theme = element_text(size = 16, face = "bold"),
+                               label.theme = element_text(size = 16), override.aes = list(size = 1.4)),
+         fill = "none")
+
+ggsave(NissVsLangOstr, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/FST/SLWin_20k_Feb22list--Fst-Windows-NissVsLangOstr.pdf", device = cairo_pdf, scale = 1, width = 26, height = 20, dpi = 600)
+dev.off()
+
 #
 ##
 ### The END ~~~~~
