@@ -182,6 +182,95 @@ PopGenEstimates_Plot <-
 ggsave(PopGenEstimates_Plot, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/PopGenEstimates/Genome-wide_PopGenEstimates_Feb22.pdf",
        device = cairo_pdf, width = 12, height = 8, scale = 1.35, dpi = 600)
 
+##### HET #####
+Het <- read.table("~/Desktop/Scripts/Data/PopGenEstimates/Dataset_I/GEO_FlatOysters--AllSamples_0.25--HET.txt", sep = "\t", header = FALSE)
+Het <- select (Het,-c(V2))
+colnames(Het) <- c("Sample_ID", "Heterozygosity")
+# Drop the columns of the dataframe
+
+#remove path bamfile
+Het$Sample_ID=sub(".bam","",Het$Sample_ID)
+Het$Sample_ID=sub(".+/","",Het$Sample_ID)
+length(Het$Sample_ID)
+Het$Sample_ID
+Het$Sample_ID=sub(".depth.gz","",Het$Sample_ID)
+length(Het$Sample_ID)
+pop=substr(Het$Sample_ID,0,4) #name only 4characters -> pop
+
+#combine
+Het_pop = as.data.frame(cbind(pop, Het)) 
+unique(pop)
+#order pop
+Het_pop$pop <- factor(Het_pop$pop, ordered = T,
+                              levels = c("MOLU", "ZECE", "CRES",
+                                         "ORIS","CORS", "PONT",  "RIAE",
+                                         "USAM",
+                                         "TOLL", "COLN", "BARR", 
+                                         "TRAL", "CLEW",
+                                         "RYAN", "NELL",
+                                         "GREV", "WADD", 
+                                         "FURI", "NISS","LOGS","VENO", "HALS", "THIS",
+                                         "HVAD", "KALV",  "HFJO", "RAMS", "ORNE", "HYPP",
+                                         "LANG", "BUNN", "DOLV", "HAUG", "HAFR",  
+                                         "INNE","VAGS", "AGAB", "OSTR"))
+
+#Plot
+Het_plot <- 
+  ggplot() +
+  geom_point(data = Het_pop,
+             aes(x = pop, y = Heterozygosity, fill = pop), colour = "#000000", shape = 21, size = 3.5, alpha = .9) +
+  scale_colour_manual(values =c( "#A02353", "#A02353", "#A02353",
+                                 "#AD5B35",
+                                 "#ad7358",
+                                 "#CC480C",  "#CC480C",
+                                 "#000000",
+                                 "#D38C89", "#D38C89", "#D38C89",
+                                 "#C89AD1", "#C89AD1",
+                                 "#7210A0", "#7210A0",
+                                 "#91BD96", "#91BD96",
+                                 "#02630C", "#02630C","#02630C","#02630C", "#02630C", "#02630C",
+                                 "#45D1F7", "#45D1F7", "#45D1F7", "#45D1F7",  "#45D1F7",
+                                 "#588cad", "#588cad", "#588cad", "#588cad", "#588cad",
+                                 "#240377", "#240377", "#240377", "#240377", "grey" ))+
+  scale_fill_manual(values = c( "#A02353", "#A02353", "#A02353",
+                                "#AD5B35",
+                                "#ad7358",
+                                "#CC480C",  "#CC480C",
+                                "#000000",
+                                "#D38C89", "#D38C89", "#D38C89",
+                                "#C89AD1", "#C89AD1",
+                                "#7210A0", "#7210A0",
+                                "#91BD96", "#91BD96",
+                                "#02630C", "#02630C","#02630C","#02630C", "#02630C", "#02630C",
+                                "#45D1F7", "#45D1F7", "#45D1F7", "#45D1F7",  "#45D1F7",
+                                "#588cad", "#588cad", "#588cad", "#588cad", "#588cad",
+                                "#240377", "#240377", "#240377", "#240377", "grey" )) +
+  theme(panel.background = element_rect(fill = "#ffffff"),
+        #panel.grid.major.x = element_line(colour = "#ededed", linetype = "dashed", size = .00005),
+        #panel.grid.major.y = element_blank(),
+        #panel.grid.minor = element_blank(), 
+        #panel.border = element_blank(),
+        axis.line = element_line(colour = "#000000", size = .3),
+        axis.title.x = element_blank(),
+        axis.text.x = element_text(colour = "#000000", size = 16, face = "bold", angle = 45, vjust = 1, hjust = 1),
+        axis.text.y = element_text(colour = "#000000", size = 16),
+        axis.ticks.x = element_line(colour = "#000000", size = .3),
+        axis.ticks.y = element_line(colour = "#000000", size = .3),
+        strip.background.y = element_rect(colour = "#000000", fill = "#d6d6d6", size = 0.3),
+        strip.text = element_text(colour = "#000000", size = 12, face = "bold"),
+        legend.position = "top",
+        legend.margin = margin(t = 0, b = 0, r = 0, l = 0),
+        legend.box.margin = margin(t = 10, b = 20, r = 0, l = 0),
+        legend.key = element_rect(fill = NA),
+        legend.background =element_blank()) +
+  guides(fill = guide_legend(title = "Populations:", title.theme = element_text(size = 12, face = "bold"),
+                             label = TRUE,
+                             label.theme = element_text(size = 14),
+                             override.aes = list(size = 5, alpha = .9)), colour = "none")
+
+ggsave(Het_plot, file = "~/Desktop/Scripts/Flat_oysters/04_local_R/03_results/PopGenEstimates/Genome-wide_Heterozygosity_Mar22.pdf",
+       device = cairo_pdf, width = 12, height = 8, scale = 1.35, dpi = 600)
+
 
 #
 ##
