@@ -128,6 +128,8 @@ angsd -b $BAMLIST -ref $REF -out $OUTPUTDIR/Leona20dec21_SNPs_11jan22 -sites $SN
 -doCov 1 -makeMatrix 1 -P 12
 ```
 
+
+
 ## Missing Data on the Variant Calling 195446 SNPs 
 ##### Gets Real Coverage (_Genotype Likelihoods_):
 ```
